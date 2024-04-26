@@ -1,0 +1,10 @@
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2 ease-in-out;
+}
