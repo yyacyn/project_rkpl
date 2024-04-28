@@ -10,3 +10,12 @@ btn.addEventListener('click', () => {
         btn.classList.remove('active');
     }
 });
+
+function dropdown() {
+    document.querySelector("#side-menu").classList.toggle('hidden')
+}
+
+// function open() {
+//     document.querySelector(".sidebar").classList.toggle('left-[-300px]')
+    
+// }
