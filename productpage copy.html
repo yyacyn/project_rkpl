@@ -26,7 +26,7 @@
                 <img src="images/teratai7.png" width="90%px" />
             </span>
         </div>
-        <div class="sidebar-menu" id="side-menu" onclick="dropdown()">
+        <div class="sidebar-menu" id="side-menu">
             <ul>
                 <li>
                     <a href="index.html"><span class="las la-home"></span><span>Dashboard</span></a>
@@ -42,11 +42,11 @@
     </div>
 
     <!--SEARCHBAR-->
-    <div class="main-content flex transition-all ml-0 lg:ml-[245px]">
-        <header class="items-center flex flex-row justify-evenly gap-4 lg:grid w-[calc(100%-245px)] flex-nowrap lg:w-[100%] lg:flex-wrap">
+    <div class="main-content flex flex-col transition-all ml-0 lg:ml-[245px] lg:w-[1200px]">
+        <header class="flex flex-row justify-between w-screen lg:w-screen sticky top-0 h-[60px] items-center bg-amber-200 p-5">
             <h2 class="items-center flex mr-0 ml-8 lg:ml-[0px]">
                 <label for="nav-toggle">
-                    <span class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[15px]"></span>
+                    <span class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[40px]"></span>
                 </label>
                 <div class="main-menu ml-[-5px]">
                     <a href="#" aria-current="page"><span
@@ -55,17 +55,19 @@
                     <div class="underline w-10 h-1 lg:w-15 lg:h-[3px] rounded-full mx-auto bg-black hidden lg:block"></div>
                 </div>
             </h2>
-            <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] mr-0 lg:mr-[2rem] h-[30px] mx-auto">
-                <span class="las la-search mt-1"></span>
-                <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]"/>
-            </div>
-            <div class="user-wrapper w-7 mr-5 lg:w-10 lg:mr-[250px]">
-                <img src="images/6.jpg" width="40px" height="40px" alt="">
+            <div class="search-user flex flex-row-reverse w-[300px]">
+                <div class="user-wrapper w-7 mr-5 lg:w-10">
+                    <img src="images/6.jpg" width="40px" height="40px" alt="">
+                </div>
+                <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] float-end mr-0 lg:mr-[2rem] h-[30px] ">
+                    <span class="las la-search mt-1"></span>
+                    <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]"/>
+                </div>
             </div>
         </header>
 
     <!--KONTEN-->
-    <main class="flex-col flex w-screen h-screen">
+    <main class="content flex-col flex lg:w-[1250px] h-screen">
         <div class="searcher items-start justify-center mx-auto">
             <div class="search-wrapper mt-[80px] mx-auto w-[150px] lg:mt-[100px] lg:w-[220px] lg:h-[40px] float-end mr-0 lg:mr-[2rem] h-[30px] mb-3">
                 <span class="las la-search"></span>

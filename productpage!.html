@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .sidebar.active ~.main-content {
+            left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        .sidebar.active {
+            width: 250px;
+        }
+
+        /* .sidebar #btn {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            font-size: 22px;
+            color: #fff;
+            transform: translateX(-50%);
+            cursor: pointer;
+        } */
+
+        .sidebar.active #btn {
+            left: 90%;
+        }
+
+        .sidebar.active .top .logo {
+            opacity: 1;
+        }
+
+        .sidebar p {
+            opacity: 0;
+        }
+        .sidebar.active p{
+            opacity: 1;
+        }
+
+        .sidebar ul li {
+            position: relative;
+            margin: 0.8rem auto;
+            list-style: none;
+            height: 50px;
+            width: 90%;
+            line-height: 50px;
+        }
+
+        .sidebar ul li a{
+            color: #fff;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 0.8rem;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #fff;
+            color: black;
+        }
+        .sidebar ul li a i {
+            min-width: 50px;
+            text-align: center;
+            height: 50px;
+            border-radius: 12px;
+            line-height: 50px;
+        }
+
+        .sidebar.active ul li a i {
+            min-width: 50px;
+            text-align: left;
+            height: 50px;
+            border-radius: 12px;
+            line-height: 50px;
+        }
+
+        .sidebar .nav-item {
+            opacity: 0;
+        }
+
+        .sidebar.active .nav-item {
+            opacity: 1;
+        }
+        .sidebar ul li .tooltip {
+            position: absolute;
+            left: 125px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0.5rem 0.8rem rgba(0,0,0, 0.2);
+            border-radius: 0.8rem;
+            padding: .4rem 1.2rem;
+            line-height: 1.8rem;
+            z-index: 20;
+            opacity: 0;
+        }
+
+        .sidebar ul li:hover .tooltip {
+            opacity: 1;
+        }
+
+        .sidebar.active ul li .tooltip {
+            display: none;
+        }
+        
+        .main-content {
+            position: relative;
+            min-height: 100vh;
+            top: 0;
+            left: 80px;
+            transition: all 0.5s ease-in-out;
+            width: calc(100% - 80px);
+            padding: 1rem;
+        }
+
+    </style>
+    <title>Document</title>
+</head>
+<body class="bg-slate-100">
+    <div class="sidebar absolute top-0 left-0 h-[100vh] w-[80px] bg-blue-400 py-[.4rem] px-[.8rem] transition-all duration-[0.5s] ease-in-out">
+        <div class="top flex flex-row items-center transition-all">
+            <div class="logo text-white flex h-[50px] items-center pointer-events-none opacity-0">
+                <i class="bx bxl-codepen text-2xl mr-[5px]"></i>
+                <span>Toko teratai7</span>
+            </div>
+            <!-- <i class="bx bx-menu flex items-center mt-2" id="btn"></i> -->
+        </div>
+        <div class="user flex items-center my-1 mx-0">
+            <img src="images/teratai7.png" alt="" class="user-img w-[50px] rounded-full border-2 border-s-orange-50">
+            <div class="">
+                <p class="bold font-semibold ml-[1rem]">Admin</p>
+                <p class="text-white opacity-[1] ml-[1rem]">Admin</p>
+            </div>
+        </div>
+        <ul>
+            <li class="">
+                <a href="#">
+                    <i class="bx bxs-grid-alt"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bxs-shopping-bag-alt"></i>
+                    <span class="nav-item">Products</span>
+                </a>
+                <span class="tooltip">Products</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-wallet-alt"></i>
+                    <span class="nav-item">Report</span>
+                </a>
+                <span class="tooltip">Report</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content flex-col">
+        <div class="search-bar flex flex-row justify-between">
+            <div class="left-side flex items-center">
+                <i class="bx bx-menu flex items-center" id="btn"></i>
+                <h1 class="ml-8">Toko Teratai</h1>
+            </div>
+            <div class="right-side justify-end">
+                <h1>Right Side</h1>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+    <script>
+        let btn = document.querySelector("#btn");
+        let sidebar = document.querySelector(".sidebar");
+        btn.onclick = function() {
+            sidebar.classList.toggle("active");
+        }
+    </script>
+
+</html> 

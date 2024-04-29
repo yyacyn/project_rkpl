@@ -192,7 +192,7 @@ header label span {
   }
 }
 
-/* @media screen and (max-width: 600px){
+@media screen and (max-width: 600px){
   #nav-toggle:checked~.main-content {
     margin-left: 0;
   }
@@ -219,4 +219,4 @@ header label span {
   #nav-toggle:checked+.sidebar li a span:last-child {
     display: none;
   }
-} */
+}
