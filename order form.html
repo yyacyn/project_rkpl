@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Order Form</title>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</link>
+</head>
+
+<body class="bg-[#F5F5F5]">
+    <!--SIDEBAR-->
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar transition-all left-[-300px] lg:left-0">
+        <div class="sidebar-brand">
+            <span>
+                <img src="images/teratai7.png" width="90%px" />
+            </span>
+        </div>
+        <div class="sidebar-menu" id="side-menu" onclick="dropdown()">
+            <ul>
+                <li>
+                    <a href="index.html"><span class="las la-home"></span><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="product.html"><span class="las la-clipboard-list"></span><span>Product</span></a>
+                </li>
+                <li>
+                    <a href="report.html"><span class="las la-money-bill"></span><span>Report</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--SEARCHBAR-->
+    <div class="main-content flex transition-all ml-0 lg:ml-[245px]">
+        <header class="items-center flex flex-row justify-evenly gap-4 lg:grid w-[calc(100%-245px)] flex-nowrap lg:w-[100%] lg:flex-wrap">
+            <h2 class="items-center flex mr-0 ml-8 lg:ml-[0px]">
+                <label for="nav-toggle">
+                    <span class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[15px]"></span>
+                </label>
+                <div class="main-menu ml-[-5px]">
+                    <a href="#" aria-current="page"><span
+                            class="font-semibold text-sm lg:text-xl">Product</span></a><br>
+                            <!--HALAMAN WEBSITE PRODUCT-->
+                    <div class="underline w-10 h-1 lg:w-15 lg:h-[3px] rounded-full mx-auto bg-black hidden lg:block"></div>
+                </div>
+            </h2>
+            <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] mr-0 lg:mr-[2rem] h-[30px] mx-auto">
+                <span class="las la-search mt-1"></span>
+                <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]"/>
+            </div>
+            <div class="user-wrapper w-7 mr-5 lg:w-10 lg:mr-[250px]">
+                <img src="images/6.jpg" width="40px" height="40px" alt="">
+            </div>
+        </header>
+
+    <!--KONTEN-->
+    <main class="flex-col flex w-screen">
+        <div class="searcher items-start justify-end">
+            <div class="search-wrapper mt-[80px] mx-auto w-[150px] lg:mt-[100px] lg:w-[220px] lg:h-[40px] float-end mr-0 lg:mr-[2rem] h-[30px] mb-3">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="search product" class="text-xs lg:text-base ml-[-15px]"/>
+            </div>
+        </div>
+        <div class="content flex flex-col mt-3">
+            <div class="order-form-container flex flex-row mx-auto ">
+                <div class="form bg-white p-5 rounded-lg w-[350px] shadow-md">
+                    <h1 class="text-center text-2xl font-bold">Order Form</h1>
+                    <form action="orderform.php" method="POST">
+                        <div class="form-group my-2">
+                            <label for="name">Customer name</label><br>
+                            <input type="text" name="name" id="name" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="date">Date</label><br>
+                            <input type="date" name="date" id="date" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                            </input>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="product">Product code</label><br>
+                            <input type="text" name="product-code" id="product-code" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                            </input>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="product-name">Product name</label><br>
+                            <input type="text" name="product-name" id="product-name" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="product-price">Price</label><br>
+                            <input type="text" name="price" id="price" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="product-stock">Stock</label><br>
+                            <input type="text" name="stock" id="stock" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                            </input>
+                        </div>
+                        <div class="lower-form flex flex-row justify-between items-center">
+                            <div class="form-group mt-5 text-xs">
+                                <label for="quantity">Quantity:</label>
+                                <input type="text" name="quantity" id="quantity" class="form-control bg-amber-100 p-1 rounded-lg w-20 ml-1" required>
+                                </input>
+                            </div>
+                            <button type="submit" class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300">Add order</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="transaction-table bg-white p-5 rounded-lg ml-5 w-[750px] h-[575px] overflow-auto overflow-x-hidden shadow-md">
+                    <h1 class="text-center text-2xl font-bold">Transaction</h1>
+                    <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
+                        <thead class="text-sm">
+                            <tr class="bg-amber-100">
+                                <th class="px-4 py-2">No</th>
+                                <th class="px-4 py-2">Product code</th>
+                                <th class="px-4 py-2">Product name</th>
+                                <th class="px-4 py-2">Price</th>
+                                <th class="px-4 py-2">Stock</th>
+                                <th class="px-4 py-2">Quantity</th>
+                                <th class="px-4 py-2">Total</th>
+                                <th class="px-4 py-2">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm rounded-md overflow-scroll">
+                            <tr>
+                                <td class="border px-4 py-2">1</td>
+                                <td class="border px-4 py-2">P001</td>
+                                <td class="border px-4 py-2">Baju</td>
+                                <td class="border px-4 py-2">Rp. 100.000</td>
+                                <td class="border px-4 py-2">10</td>
+                                <td class="border px-4 py-2">2</td>
+                                <td class="border px-4 py-2">Rp. 200.000</td>
+                                <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td class="border px-4 py-2">2</td>
+                                <td class="border px-4 py-2">P002</td>
+                                <td class="border px-4 py-2">Celana</td>
+                                <td class="border px-4 py-2">Rp. 150.000</td>
+                                <td class="border px-4 py-2">5</td>
+                                <td class="border px-4 py-2">3</td>
+                                <td class="border px-4 py-2">Rp. 450.000</td>
+                                <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td class="border px-4 py-2">3</td>
+                                <td class="border px-4 py-2">P003</td>
+                                <td class="border px-4 py-2">Topi</td>
+                                <td class="border px-4 py-2">Rp. 50.000</td>
+                                <td class="border px-4 py-2">15</td>
+                                <td class="border px-4 py-2">1</td>
+                                <td class="border px-4 py-2">Rp. 50.000</td>
+                                <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="transaction-form-lower mt-5 flex flex-col">
+                        <div class="sub-total-amount-return text-xs">
+                            <div class="form-group-transaction my-2">
+                                <label for="sub-total">Sub total (Rp):</label><br>
+                                <input type="text" name="price" id="price" class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="12344">
+                            </div>
+                            <div class="form-group-transaction my-2">
+                                <label for="amount">Amount (Rp):</label><br>
+                                <input type="text" name="price" id="price" class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="12344">
+                            </div>
+                            <div class="form-group-transaction my-2">
+                                <label for="return">Return (Rp):</label><br>
+                                <input type="text" name="price" id="price" class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="12344">
+                            </div>
+                        </div>
+                        <div class="btn-done">
+                            <button type="submit" class="py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all">Done</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="invoice flex mx-auto">
+                <div class="invoice-container bg-white p-5 rounded-lg w-[1120px] h-[575px] overflow-auto overflow-x-hidden shadow-md my-5">
+                    <h1 class="text-center text-2xl font-bold">Invoice</h1>
+                        <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
+                            <thead class="text-sm">
+                                <tr class="bg-amber-100">
+                                    <th class="px-4 py-2">No</th>
+                                    <th class="px-4 py-2">Customer name</th>
+                                    <th class="px-4 py-2">Date</th>
+                                    <th class="px-4 py-2">Product name</th>
+                                    <th class="px-4 py-2">Quantity</th>
+                                    <th class="px-4 py-2">Amount</th>
+                                    <th class="px-4 py-2">Return</th>
+                                    <th class="px-4 py-2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm rounded-md overflow-scroll">
+                                <tr>
+                                    <td class="border px-4 py-2">1</td>
+                                    <td class="border px-4 py-2">Budi</td>
+                                    <td class="border px-4 py-2">12/12/2021</td>
+                                    <td class="border px-4 py-2">Baju</td>
+                                    <td class="border px-4 py-2">2</td>
+                                    <td class="border px-4 py-2">Rp. 200.000</td>
+                                    <td class="border px-4 py-2">Rp. 0</td>
+                                    <td class="border px-4 py-2">Rp. 200.000</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">2</td>
+                                    <td class="border px-4 py-2">Joko</td>
+                                    <td class="border px-4 py-2">12/12/2021</td>
+                                    <td class="border px-4 py-2">Celana</td>
+                                    <td class="border px-4 py-2">3</td>
+                                    <td class="border px-4 py-2">Rp. 450.000</td>
+                                    <td class="border px-4 py-2">Rp. 0</td>
+                                    <td class="border px-4 py-2">Rp. 450.000</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">3</td>
+                                    <td class="border px-4 py-2">Joni</td>
+                                    <td class="border px-4 py-2">12/12/2021</td>
+                                    <td class="border px-4 py-2">Topi</td>
+                                    <td class="border px-4 py-2">1</td>
+                                    <td class="border px-4 py-2">Rp. 50.000</td>
+                                    <td class="border px-4 py-2">Rp. 0</td>
+                                    <td class="border px-4 py-2">Rp. 50.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="invoice-form-lower mt-5 flex flex-col float-end">
+                            <div class="total text-sm">
+                                <div class="form-group-transaction my-2">
+                                    <label for="return">Total (Rp):</label><br>
+                                    <input type="text" name="price" id="price" class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="1000000">
+                                </div>
+                            </div>
+                            <div class="btn-done">
+                                <button type="button" class="py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all" onclick="window.open('printarea.html');">Print</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+     
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</body>
+
+</html>

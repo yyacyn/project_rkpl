@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Print</title>
+</head>
+
+<body>
+    <div class="invoice flex mx-auto">
+        <div
+            class="invoice-container bg-white p-5 rounded-lg w-[1120px] h-[575px] overflow-auto overflow-x-hidden my-5">
+            <h1 class="text-center text-2xl font-bold">Invoice</h1>
+            <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
+                <thead class="text-sm">
+                    <tr class="bg-amber-100">
+                        <th class="px-4 py-2">No</th>
+                        <th class="px-4 py-2">Customer name</th>
+                        <th class="px-4 py-2">Date</th>
+                        <th class="px-4 py-2">Product name</th>
+                        <th class="px-4 py-2">Quantity</th>
+                        <th class="px-4 py-2">Amount</th>
+                        <th class="px-4 py-2">Return</th>
+                        <th class="px-4 py-2">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm rounded-md overflow-scroll">
+                    <tr>
+                        <td class="border px-4 py-2">1</td>
+                        <td class="border px-4 py-2">Budi</td>
+                        <td class="border px-4 py-2">12/12/2021</td>
+                        <td class="border px-4 py-2">Baju</td>
+                        <td class="border px-4 py-2">2</td>
+                        <td class="border px-4 py-2">Rp. 200.000</td>
+                        <td class="border px-4 py-2">Rp. 0</td>
+                        <td class="border px-4 py-2">Rp. 200.000</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">2</td>
+                        <td class="border px-4 py-2">Joko</td>
+                        <td class="border px-4 py-2">12/12/2021</td>
+                        <td class="border px-4 py-2">Celana</td>
+                        <td class="border px-4 py-2">3</td>
+                        <td class="border px-4 py-2">Rp. 450.000</td>
+                        <td class="border px-4 py-2">Rp. 0</td>
+                        <td class="border px-4 py-2">Rp. 450.000</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">3</td>
+                        <td class="border px-4 py-2">Joni</td>
+                        <td class="border px-4 py-2">12/12/2021</td>
+                        <td class="border px-4 py-2">Topi</td>
+                        <td class="border px-4 py-2">1</td>
+                        <td class="border px-4 py-2">Rp. 50.000</td>
+                        <td class="border px-4 py-2">Rp. 0</td>
+                        <td class="border px-4 py-2">Rp. 50.000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="invoice-form-lower mt-5 flex flex-col float-end">
+                <div class="total text-sm">
+                    <div class="form-group-transaction my-2">
+                        <label for="return">Total (Rp):</label><br>
+                        <input type="text" name="price" id="price"
+                            class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="1000000">
+                    </div>
+                </div>
+                <div class="btn-done">
+                    <button type="button"
+                        class="py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all"
+                        onclick="window.print()">Print now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

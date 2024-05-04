@@ -6,6 +6,20 @@
   --text-grey: #8390A2;
 }
 
+@media print {
+  .invoice-form-lower {
+    visibility: hidden;
+  }
+
+  #section-to-print {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  
+}
 * {
   padding: 0;
   margin: 0;
