@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>Money</title>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</link>
+<script>
+    $(document).ready(function () {
+        $("#income-button").click(function () {
+            $("#income-content").show();
+            $("#expense-content").hide();
+            $("#income-button").addClass("button-active");
+            $("#expense-button").removeClass("button-active");
+        });
+
+        $("#expense-button").click(function () {
+            $("#income-content").hide();
+            $("#expense-content").show();
+            $("#income-button").removeClass("button-active");
+            $("#expense-button").addClass("button-active");
+        });
+    });
+</script>
+</head>
+
+<body class="bg-[#F5F5F5]">
+    <!--SIDEBAR-->
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar transition-all left-[-300px] lg:left-0">
+        <div class="sidebar-brand">
+            <span>
+                <img src="images/teratai7.png" width="90%px" />
+            </span>
+        </div>
+        <div class="sidebar-menu" id="side-menu" onclick="dropdown()">
+            <ul>
+                <li>
+                    <a href="index.html"><span class="las la-home"></span><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="product.html"><span class="las la-clipboard-list"></span><span>Product</span></a>
+                </li>
+                <li>
+                    <a href="report.html"><span class="las la-money-bill"></span><span>Report</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--SEARCHBAR-->
+    <div class="main-content flex transition-all ml-0 lg:ml-[245px]">
+        <header class="items-center flex flex-row justify-evenly gap-4 lg:grid w-[calc(100%-245px)] flex-nowrap lg:w-[100%] lg:flex-wrap">
+            <h2 class="items-center flex mr-0 ml-8 lg:ml-[0px]">
+                <label for="nav-toggle">
+                    <span class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[15px]"></span>
+                </label>
+                <div class="main-menu ml-[-5px]">
+                    <a href="#" aria-current="page"><span
+                            class="font-semibold text-sm lg:text-xl">Money</span></a><br>
+                            <!--HALAMAN WEBSITE PRODUCT-->
+                    <div class="underline w-10 h-1 lg:w-15 lg:h-[3px] rounded-full mx-auto bg-black hidden lg:block"></div>
+                </div>
+            </h2>
+            <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] mr-0 lg:mr-[2rem] h-[30px] mx-auto">
+                <span class="las la-search mt-1"></span>
+                <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]"/>
+            </div>
+            <div class="user-wrapper w-7 mr-5 lg:w-10 lg:mr-[250px]">
+                <img src="images/6.jpg" width="40px" height="40px" alt="">
+            </div>
+        </header>
+
+    <!--KONTEN-->
+    <main class="flex-col flex w-screen">
+        <div class="money-content flex flex-col mt-[100px] mx-auto">
+            <div class="flex flex-row bg-[#F1EFEF] w-[1000px] justify-around h-[80px] items-center text-xl shadow-md transition-all">
+                <!-- <div class="income">
+                    <div class="income-active bg-white px-5 py-2 rounded-lg shadow-md font-bold">Income</div>
+                    <div class="income-passive"></div>
+                </div>
+                <div class="expense">
+                    <div class="expense-active bg-white px-5 py-2 rounded-lg shadow-md font-bold" onclick="">Expense</div>
+                    <div class="expense-passive"></div>
+                </div> -->
+                <button id="income-button" class="button-active transition-all">Income</button>
+                <button id="expense-button" class="transition-all">Expense</button>
+            </div>
+            <div class="income-content flex flex-row mt-10 text-sm mx-auto" id="income-content">
+                <div class="income-table h-[500px] overflow-auto overflow-x-hidden w-[780px]">
+                    <table class="table-auto">
+                        <thead class="bg-amber-200">
+                            <tr>
+                                <th class="px-4 py-2">Date & Time</th>
+                                <th class="px-4 py-2">Order ID</th>
+                                <th class="px-4 py-2">Customer's name</th>
+                                <th class="px-4 py-2">Quantity</th>
+                                <th class="px-4 py-2">Payment method</th>
+                                <th class="px-4 py-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-amber-100 text-center">
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">123456</td>
+                                <td class="border-0 px-4 py-2">John Doe</td>
+                                <td class="border-0 px-4 py-2">2</td>
+                                <td class="border-0 px-4 py-2">Cash</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <aside class="flex flex-col text-sm justify-start items-center ml-5">
+                    <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                        <label for="cash-value" class="font-semibold">Cash</label>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                    </div>
+                    <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                        <label for="cash-value" class="font-semibold">QRIS</label>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                    </div>
+                    <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                        <label for="cash-value" class="font-semibold">Belum bayar</label>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                    </div>
+                    <div class="edit-data flex items-center justify-center">
+                        <button class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all">
+                            <box-icon name='wallet' class="mr-1"></box-icon>Edit Data</button>
+                    </div>
+                </aside>
+            </div>
+            <div class="expense-content flex flex-row mt-10 text-sm mx-auto" style="display: none;" id="expense-content">
+                <div class="expense-table h-[500px] overflow-auto overflow-x-hidden w-[780px]">
+                    <table class="table-fixed">
+                        <thead class="bg-amber-200">
+                            <tr>
+                                <th class="px-4 py-2 w-[255px]">Date & Time</th>
+                                <th class="px-4 py-2 w-[255px]">Amount of money</th>
+                                <th class="px-4 py-2 w-[255px]">Information</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-amber-100 text-center">
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
+                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <aside class="flex flex-col text-sm justify-start items-center ml-5">
+                    <div class="h1 w-full flex justify-start text-start">
+                        <h1 class="mb-2 text-lg font-semibold">Expenses</h1>
+                    </div>
+                    <div class="container flex flex-col bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                        <div class="date mt-3">
+                            <label for="date">Date:</label>
+                            <select name="expense-date" id="expense-date" class="ml-2 bg-white rounded-lg shadow-md ">
+                                <option value="today">Today</option>
+                                <option value="week">This week</option>
+                                <option value="month">This month</option>
+                                <option value="year">This year</option>
+                            </select>
+                        </div>
+                        <div class="amount-of-money mt-5">
+                            <label for="amount-of-money" class="font-semibold">Amount of money</label>
+                            <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" readonly>
+                        </div>
+                        <div class="information mt-5 mb-5">
+                            <label for="amount-of-money" class="font-semibold">Information</label>
+                            <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" readonly>
+                        </div>
+                    </div>
+                    <div class="save-button flex items-center justify-end float-end">
+                        <button class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all">
+                            <box-icon name='wallet' class="mr-1"></box-icon>Save</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        
+        </div>
+    </main>
+    </div>
+
+     
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
