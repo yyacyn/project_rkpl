@@ -178,13 +178,13 @@ header label span {
 }
 
 .button-active {
-    background-color: #ffffff; /* Change to your active button background color */
-    color: #000000; /* Change to your active button text color */
-    font-weight: bold; /* Optionally, make the text bold */
-    /* Add any other styles you want for the active button */
+    background-color: #ffffff; 
+    color: #000000;
+    font-weight: bold; 
     padding: 5px 15px;
     border-radius: 5px;
 }
+
 
 @media only screen and (max-width: 1200px) {
   .sidebar {
