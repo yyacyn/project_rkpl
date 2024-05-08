@@ -39,24 +39,24 @@ boxIcon.addEventListener('click', function () {
 });
 
 
-function show(x) {
-    var x = document.getElementById("myDIV");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+// function show(x) {
+//     var x = document.getElementById("myDIV");
+//     if (x.style.display === "none") {
+//         x.style.display = "block";
+//     } else {
+//         x.style.display = "none";
+//     }
+// }
 
-document.getElementById('expense-button').addEventListener('click', function() {
-    document.getElementById('expense-content').style.display = 'block';
-    document.getElementById('income-content').style.display = 'none';
-});
+// document.getElementById('expense-button').addEventListener('click', function() {
+//     document.getElementById('expense-content').style.display = 'block';
+//     document.getElementById('income-content').style.display = 'none';
+// });
 
-document.getElementById('income-button').addEventListener('click', function() {
-    document.getElementById('income-content').style.display = 'block';
-    document.getElementById('expense-content').style.display = 'none';
-});
+// document.getElementById('income-button').addEventListener('click', function() {
+//     document.getElementById('income-content').style.display = 'block';
+//     document.getElementById('expense-content').style.display = 'none';
+// });
 
 $(document).ready(function () {
     $("#income-button").click(function () {
