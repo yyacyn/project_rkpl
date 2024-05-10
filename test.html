@@ -168,6 +168,15 @@
 
         @media screen and (max-width: 768px) {
             
+
+            
+            .sidebar.active~.header {
+            /* left: 200px; */
+                margin-left: -100px;
+                width: calc(100% - 100px);
+                height: 50px;
+            }
+
             .sidebar ul li:hover .tooltip {
             opacity: 0;
             }
@@ -218,12 +227,6 @@
                 margin-right: 0;
             } */
 
-            .sidebar.active~.header {
-            /* left: 200px; */
-                margin-left: -100px;
-                width: calc(100%);
-            }
-
             .sidebar.active .top .logo {
                 opacity: 1;
             }
@@ -235,14 +238,36 @@
 </head>
 
 <body class="bg-slate-100">
+
+    <div class="header flex flex-col h-[100%] m-0 p-0 left-[60px] lg:h-[100%] lg:left-[80px] w-[calc(100%-55px)] lg:w-[calc(100%-80px)]">
+        <header class="search-bar flex flex-row justify-between items-center bg-amber-200 p-2 lg:p-4 sticky">
+            <h2 class="">
+                <div class="main-menu">
+                    <a href="#" aria-current="page"><span class="text-sm lg:text-xl font-semibold">Product</span></a><br>
+                    <!--HALAMAN WEBSITE PRODUCT-->
+                    <div class=""></div>
+                </div>
+            </h2>
+            <div class="search-user flex flex-row items-center">
+                <div class="search-wrapper h-5 w-[150px] flex items-center mr-2 lg:w-[100%] lg:h-8">
+                    <span class="las la-search w-5 mr-1"></span>
+                    <input type="search" placeholder="search here" class="text-xs lg:text-base" />
+                </div>
+                <div class="">
+                    <img src="images/6.jpg" width="40px" height="40px" alt="" class="w-[30px] lg:w-[40px] rounded-full ml-[-5px]">
+                </div>
+            </div>
+        </header>
+    </div>
+
     <div
         class="sidebar absolute top-0 left-0 h-[100%] lg:h-[100vh] w-[60px] lg:w-[80px] bg-[#F7D060] py-[.4rem] px-[.8rem] transition-all duration-[0.5s] ease-linear flex-col shadow-md">
-        <div class="top flex flex-row items-center transiton">
-            <div class="logo text-white flex h-[50px] items-center pointer-events-none opacity-0 mt-1">
+        <div class="top flex flex-row items-start transiton">
+            <div class="logo text-white flex h-[50px] items-start lg:items-center pointer-events-none opacity-0 lg:mt-1">
                 <!-- <i class="bx bxl-codepen text-2xl mr-[5px]"></i> -->
                 <span>Toko teratai7</span>
             </div>
-            <i class="bx bx-menu flex items-center mt-4" id="btn"></i>
+            <i class="bx bx-menu flex items-center lg:mt-4" id="btn"></i>
         </div>
         <div class="user flex items-center my-1 mx-0 justify-center">
             <img src="images/teratai7.png" alt="" class="user-img w-[50px] rounded-full border-2 border-s-orange-50">
@@ -274,27 +299,6 @@
                 <span class="tooltip">Report</span>
             </li>
         </ul>
-    </div>
-
-    <div class="header flex flex-col h-[100%] m-0 p-0 left-[60px] lg:left-[80px] w-[calc(100%-55px)] lg:w-[calc(100%-80px)]">
-        <header class="search-bar flex flex-row justify-between items-center bg-amber-200 p-4 sticky">
-            <h2 class="">
-                <div class="main-menu">
-                    <a href="#" aria-current="page"><span class="">Product</span></a><br>
-                    <!--HALAMAN WEBSITE PRODUCT-->
-                    <div class=""></div>
-                </div>
-            </h2>
-            <div class="search-user flex flex-row items-center">
-                <div class="search-wrapper">
-                    <span class="las la-search"></span>
-                    <input type="search" placeholder="search here" class="" />
-                </div>
-                <div class="">
-                    <img src="images/6.jpg" width="40px" height="40px" alt="">
-                </div>
-            </div>
-        </header>
     </div>
 
     <div class="main-content flex flex-col w-[100% - 80px] ml-20">
