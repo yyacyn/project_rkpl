@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Products</title>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</link>
+</head>
+
+<body class="bg-[#F5F5F5]">
+    <!--SIDEBAR-->
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar transition-all left-[-300px] lg:left-0">
+        <div class="sidebar-brand">
+            <span>
+                <img src="images/teratai7.png" width="90%px" />
+            </span>
+        </div>
+        <div class="sidebar-menu" id="side-menu" onclick="dropdown()">
+            <ul>
+                <li>
+                    <a href="index.html"><span class="las la-home"></span><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="product.html"><span class="las la-clipboard-list"></span><span>Product</span></a>
+                </li>
+                <li>
+                    <a href="report.html"><span class="las la-money-bill"></span><span>Report</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--SEARCHBAR-->
+    <div class="main-content flex transition-all ml-0 lg:ml-[245px]">
+        <header class="items-center flex flex-row justify-evenly gap-4 lg:grid w-[calc(100%-245px)] flex-nowrap lg:w-[100%] lg:flex-wrap">
+            <h2 class="items-center flex mr-0 ml-8 lg:ml-[0px]">
+                <label for="nav-toggle">
+                    <span class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[15px]"></span>
+                </label>
+                <div class="main-menu ml-[-5px]">
+                    <a href="#" aria-current="page"><span
+                            class="font-semibold text-sm lg:text-xl">Product</span></a><br>
+                            <!--HALAMAN WEBSITE PRODUCT-->
+                    <div class="underline w-10 h-1 lg:w-15 lg:h-[3px] rounded-full mx-auto bg-black hidden lg:block"></div>
+                </div>
+            </h2>
+            <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] mr-0 lg:mr-[2rem] h-[30px] mx-auto">
+                <span class="las la-search mt-1"></span>
+                <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]"/>
+            </div>
+            <div class="user-wrapper w-7 mr-5 lg:w-10 lg:mr-[250px]">
+                <img src="images/6.jpg" width="40px" height="40px" alt="">
+            </div>
+        </header>
+
+    <!--KONTEN-->
+    <main class="flex-col flex w-screen h-screen">
+        <div class="searcher items-start justify-center mx-auto">
+            <div class="search-wrapper mt-[80px] mx-auto w-[150px] lg:mt-[100px] lg:w-[220px] lg:h-[40px] float-end mr-0 lg:mr-[2rem] h-[30px] mb-3">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="search product" class="text-xs lg:text-base ml-[-15px]"/>
+            </div>
+        </div>
+        <div class="order-cart-btn flex justify-end mr-5 items-center">
+            <a href="order form.html" target="_blank"
+                class="order-btn bg-white px-5 py-1 lg:py-2 rounded-full shadow-md hover:scale-105 transition-transform active:scale-100 active:bg-gray-50 text-xs lg:text-base">Order</a>
+            <div class="shop-icon ml-2 lg:ml-3 mt-1">
+                <a href="products/create">
+                    <i class='bx bx-cart-add text-3xl align-middle'></i>
+                </a>
+            </div>
+        </div>
+        <div class="content flex">
+            <aside class="category-card ml-5 lg:ml-10 w-[70px] lg:w-[350px]">
+                <div class="category-title mb-3 flex justify-between">
+                    <h2 class="font-semibold text-sm lg:text-xl">Category</h2>
+                    <i class="icon-plus mr-5 hover:bg-gray-200 rounded-full hover:cursor-pointer active:bg-gray-300 hidden lg:block">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </i>
+                </div>
+                <div class="category-list grid grid-cols-1 lg:grid-cols-2 m-0 overflow-scroll overflow-x-hidden h-[500px] ">
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="category-item bg-white w-[50px] h-[60px] rounded-2xl items-center flex flex-col justify-between shadow-md active:scale-95 transition-transform lg:w-[150px] lg:h-[130px] mb-2 lg:mb-0 mt-0 lg:mt-5">
+                            <img src="images/ex-product.jpg" alt="" width="60%" class="mt-2">
+                            <span class="mb-1 lg:mb-2 text-xs lg:text-base">Shirt</span>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+            <div class="product-card mt-10 flex mx-auto">
+                <div class="product-list grid grid-cols-2 gap-2 lg:gap-5 ">
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-item transition-all bg-white w-[120px] h-[140px] lg:w-[320px] lg:h-[150px] rounded-2xl flex flex-col lg:flex-row items-center justify-around shadow-md hover:cursor-pointer active:scale-95">
+                        <div class="image-product mx-3 w-[60px] mt-2 lg:mt-0 lg:w-[100%]">
+                            <img src="images/ex-product.jpg" alt="" width="100px">
+                        </div>
+                        <div class="product-info h-[100px] flex flex-col">
+                            <div class="product-name my-auto mt-0">
+                                <span class="font-semibold text-[10px] lg:text-sm">Baju</span>
+                            </div>
+                            <div class="product-price my-auto mb-0">
+                                <p class="text-gray-950 text-[10px] lg:text-sm">Rp.1.000.000</p>
+                            </div>
+                        </div>
+                        <div class="product-stock-code flex flex-row lg:flex-col justify-end items-center h-[100px] mx-5 gap-1 lg:gap-0">
+                            <div class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Kode:</p>
+                            </div>
+                            <div class="product-stock bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-6 lg:pr-8">
+                                <p class="text-gray-950 text-[7px] lg:text-[10px]">Stock:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+     
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
