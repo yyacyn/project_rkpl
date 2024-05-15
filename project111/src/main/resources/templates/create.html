@@ -175,7 +175,7 @@
                                                 <a th:href="@{/edit(code=${product.code})}" class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all">Edit</a>
                                             </div>
                                             <div class="delete-btn">
-                                                <a th:href="@{/delete(code=${product.code})}" class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all" onclick="confirm">Delete</a>
+                                                <a th:href="@{/delete(code=${product.code})}" class="btn bg-red-500 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-red-400 transition-all" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                                             </div>
                                         </td>
                                     </tr>
