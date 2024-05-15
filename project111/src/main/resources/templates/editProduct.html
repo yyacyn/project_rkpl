@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <title>Edit Form</title>
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    </link>
+</head>
+
+<body>
+    <form method="POST" enctype="multipart/form-data" th:object="${productDto}">
+        <label for="code">Code:</label>
+        <input type="text" id="code" name="code" value="$PLACEHOLDER$" th:value="${product.code}" readonly><br><br>
+
+        <div class="upper-form flex flex-row mx-auto justify-center">
+            <div class="form-group my-2 flex bg-amber-100 p-2 rounded-lg items-center mx-auto">
+                <label for="picture" class="hover:cursor-pointer flex items-center">
+                    <box-icon name='image-add' class="hover:cursor-pointer w-5"></box-icon> Upload picture
+                </label>
+                <div class="input-file flex">
+                    <input type="file" name="picture" id="picture" accept="image/png, image/gif, image/jpeg, image/jpg"
+                        class="form-control hidden w-full" th:field="${productDto.imgurl}">
+                </div>
+            </div>
+            <div class="edit-img">
+                <img th:src="@{'/images/'} + ${product.imgurl}" alt="" width="30%">
+            </div>
+            <div class="form-group my-2 flex items-center mx-auto">
+                <label for="input-category"></label>
+                <select id="select-category" name="select-category"
+                    class="w-full bg-amber-100 p-3 rounded-lg flex justify-center " th:field="${productDto.category}">
+                    <option value="">Select category</option>
+                    <option value="shirt">Shirt</option>
+                    <option value="jean">Jean</option>
+                    <option value="dress">Dress</option>
+                    <option value="shoe">Shoe</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group my-2">
+            <label for="input-name">Product name</label><br>
+            <input type="text" name="input-name" id="input-name" class="form-control bg-amber-100 p-2 w-full rounded-lg"
+                th:field="${productDto.name}" required>
+        </div>
+        <div class="prices flex flex-col justify-between">
+            <div class="form-group my-2">
+                <label for="selling-price">Selling price</label><br>
+                <input type="text" name="selling-price" id="selling-price"
+                    class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.s_price}" required>
+            </div>
+            <div class="form-group my-2">
+                <label for="purchase-price">Purchase price</label><br>
+                <input type="text" name="purchase-price" id="purchase-price"
+                    class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.p_price}" required>
+            </div>
+        </div>
+        <div class="form-group my-2">
+            <label for="input-stock">Stock</label><br>
+            <input type="text" name="input-stock" id="input-stock"
+                class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.stock}" required>
+            </input>
+        </div>
+        <div class="form-group my-2">
+            <label for="input-stock">Created at</label><br>
+            <input type="text" name="createdAt" id="createdAt"
+                class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${product.createdAt}" readonly required>
+            </input>
+        </div>
+        <div class="lower-form flex flex-row justify-around items-center">
+            <button type="reset"
+                class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px]">Reset</button>
+            <button type="submit"
+                class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px]">Add
+                item</button>
+        </div>
+    </form>
+    </form>
+</body>
+
+</html>

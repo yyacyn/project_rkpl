@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Project111Application",
+            "request": "launch",
+            "mainClass": "com.tokoteratai.project111.Project111Application",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "ProjectApplication",
             "request": "launch",
             "mainClass": "com.tokoteratai.project.ProjectApplication",

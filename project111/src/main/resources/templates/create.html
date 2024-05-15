@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<title>Input Form</title>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</link>
+</head>
+
+<body class="bg-[#F5F5F5]">
+    <!--SIDEBAR-->
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar transition-all left-[-300px] lg:left-0">
+        <div class="sidebar-brand">
+            <span>
+                <img src="images/teratai7.png" width="90%px" />
+            </span>
+        </div>
+        <div class="sidebar-menu" id="side-menu" onclick="dropdown()">
+            <ul>
+                <li>
+                    <a href="/"><span class="las la-home"></span><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="product_page"><span class="las la-clipboard-list"></span><span>Product</span></a>
+                </li>
+                <li>
+                    <a href="money_page"><span class="las la-money-bill"></span><span>Report Sales</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--SEARCHBAR-->
+    <div class="main-content flex transition-all ml-0 lg:ml-[245px]">
+        <header
+            class="items-center flex flex-row justify-evenly gap-4 lg:grid w-[calc(100%-245px)] flex-nowrap lg:w-[100%] lg:flex-wrap">
+            <h2 class="items-center flex mr-0 ml-8 lg:ml-[0px]">
+                <label for="nav-toggle">
+                    <span
+                        class="las la-bars hover:cursor-pointer scale-90 mr-0 lg:scale-100 ml-[-15px] lg:ml-[15px]"></span>
+                </label>
+                <div class="main-menu ml-[-5px]">
+                    <a href="#" aria-current="page"><span
+                            class="font-semibold text-sm lg:text-xl">Product</span></a><br>
+                    <!--HALAMAN WEBSITE PRODUCT-->
+                    <div class="underline w-10 h-1 lg:w-15 lg:h-[3px] rounded-full mx-auto bg-black hidden lg:block">
+                    </div>
+                </div>
+            </h2>
+            <div class="search-wrapper w-[150px] lg:w-[220px] lg:h-[40px] mr-0 lg:mr-[2rem] h-[30px] mx-auto">
+                <span class="las la-search mt-1"></span>
+                <input type="search" placeholder="search here" class="text-xs lg:text-base md:text-md ml-[-15px]" />
+            </div>
+            <div class="user-wrapper w-7 mr-5 lg:w-10 lg:mr-[250px]">
+                <img src="images/6.jpg" width="40px" height="40px" alt="">
+            </div>
+        </header>
+
+        <!--KONTEN-->
+        <main class="flex-col flex w-screen">
+            <div class="searcher items-start justify-end">
+                <div
+                    class="search-wrapper mt-[80px] mx-auto w-[150px] lg:mt-[100px] lg:w-[220px] lg:h-[40px] float-end mr-0 lg:mr-[2rem] h-[30px] mb-3">
+                    <span class="las la-search"></span>
+                    <input type="search" placeholder="search product" class="text-xs lg:text-base ml-[-15px]" />
+                </div>
+            </div>
+            <div class="input-form">
+                <div class="content flex flex-col mt-3 text-sm">
+                    <div class="order-form-container flex flex-row mx-auto ">
+                        <div class="form bg-white p-5 rounded-lg w-[350px] shadow-md">
+                            <h1 class="text-center text-2xl font-bold">Input Form</h1>
+                            <form method="post" enctype="multipart/form-data" th:object="${productDto}">
+                                <div class="upper-form flex flex-row mx-auto justify-center">
+                                    <div class="form-group my-2 flex bg-amber-100 p-2 rounded-lg items-center mx-auto">
+                                        <label for="picture" class="hover:cursor-pointer flex items-center">
+                                            <box-icon name='image-add' class="hover:cursor-pointer w-5"></box-icon> Upload picture
+                                        </label>
+                                        <div class="input-file flex">
+                                            <input type="file" name="picture" id="picture" accept="image/png, image/gif, image/jpeg, image/jpg" class="form-control hidden w-full" th:field="${productDto.imgurl}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group my-2 flex items-center mx-auto">
+                                        <label for="input-category"></label>
+                                        <select id="select-category" name="select-category" class="w-full bg-amber-100 p-3 rounded-lg flex justify-center " th:field="${productDto.category}">
+                                            <option value="">Select category</option>
+                                            <option value="shirt">Shirt</option>
+                                            <option value="jean">Jean</option>
+                                            <option value="dress">Dress</option>
+                                            <option value="shoe">Shoe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group my-2">
+                                    <label for="input-date">Date</label><br>
+                                    <input type="date" name="input-date" id="input-date" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                                    </input>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="input-code">Product code</label><br>
+                                    <input type="text" name="input-code" id="input-code" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                                    </input>
+                                </div> -->
+                                <div class="form-group my-2">
+                                    <label for="input-name">Product name</label><br>
+                                    <input type="text" name="input-name" id="input-name" class="form-control bg-amber-100 p-2 w-full rounded-lg" th:field="${productDto.name}" required>
+                                </div>
+                                <div class="prices flex flex-col justify-between">
+                                    <div class="form-group my-2">
+                                        <label for="selling-price">Selling price</label><br>
+                                        <input type="text" name="selling-price" id="selling-price" class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.s_price}" required>
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <label for="purchase-price">Purchase price</label><br>
+                                        <input type="text" name="purchase-price" id="purchase-price" class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.p_price}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="input-stock">Stock</label><br>
+                                    <input type="text" name="input-stock" id="input-stock" class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${productDto.stock}" required>
+                                    </input>
+                                </div>
+                                <div class="lower-form flex flex-row justify-around items-center">
+                                    <button type="reset" class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px]">Reset</button>
+                                    <button type="submit" class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px]">Add item</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div
+                            class="transaction-table bg-white p-5 rounded-lg ml-5 w-[850px] h-[575px] overflow-auto overflow-x-hidden shadow-md">
+                            <h1 class="text-center text-2xl font-bold">New Product</h1>
+                            <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
+                                <thead class="text-xs">
+                                    <tr class="bg-amber-100">
+                                        <th class="px-4 py-2">Code</th>
+                                        <th class="px-4 py-2">Name</th>
+                                        <th class="px-4 py-2">Picture</th>
+                                        <th class="px-4 py-2">Selling price</th>
+                                        <th class="px-4 py-2">Purchase price</th>
+                                        <th class="px-4 py-2">Profit</th>
+                                        <th class="px-4 py-2">Stock</th>
+                                        <th class="px-4 py-2">Category</th>
+                                        <th class="px-4 py-2">Created at</th>
+                                        <th class="px-4 py-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-xs rounded-md overflow-scroll">
+                                    <tr th:each="product : ${products}">
+                                        <td class="border px-4 py-2" th:text="${product.code}"></td>
+                                        <td class="border px-4 py-2" th:text="${product.name}"></td>
+                                        <td class="border px-4 py-2"><img th:src="@{'/images/' + ${product.imgurl}}"
+                                                alt="Product Image" width="70%" style="margin: auto;"/></td>
+                                        <td class="border px-4 py-2" th:text="${product.s_price}"></td>
+                                        <td class="border px-4 py-2" th:text="${product.p_price}"></td>
+                                        <td class="border px-4 py-2"
+                                            th:text="@{'Rp. ' + ${product.s_price - product.p_price}}">
+                                        </td>
+                                        <td class="border px-4 py-2" th:text="${product.stock}"></td>
+                                        <td class="border px-4 py-2" th:text="${product.category}"></td>
+                                        <td class="border px-4 py-2" th:text="${product.createdAt.toString().substring(0,10)}"></td>
+                                        <td class="border px-4 py-2 h-[80px] gap-5">
+                                            <div class="edit-btn mb-4">
+                                                <a th:href="@{/edit(code=${product.code})}" class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all">Edit</a>
+                                            </div>
+                                            <div class="delete-btn">
+                                                <a th:href="@{/delete(code=${product.code})}" class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all" onclick="confirm">Delete</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+
+     
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</body>
+
+</html>

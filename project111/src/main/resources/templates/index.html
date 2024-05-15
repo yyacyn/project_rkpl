@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Teratai 7 Admin</title>
+        <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+        <link rel="stylesheet" href="styledashboard.css">
+    </head>
+    <body>
+
+        <!--SIDEBAR-->
+        <input type="checkbox" id="nav-toggle">
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <span>
+                    <img src="images/teratai7.png" width="90%px" />
+                </span>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="/"><span class="las la-home"></span><span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="product_page"><span class="las la-clipboard-list"></span><span>Product</span></a>
+                    </li>
+                    <li>
+                        <a href="money_page"><span class="las la-money-bill"></span><span>Report Sales</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--SEARCHBAR-->
+        <div class="main-content">
+            <header>
+                <h2>
+                    <label for="nav-toggle">
+                        <span class="las la-bars"></span>
+                    </label>
+                    DASHBOARD
+                </h2>
+                <div class="search-wrapper">
+                    <button type="submit" class="search-btn"><span class="las la-search"></span></button>
+                    <input type="search" placeholder="search here" />
+                </div>
+                <div class="user-wrapper">
+                    <img src="images/6.jpg" width="40px" height="40px" alt="">
+                </div>
+            </header>
+            
+        <!--KONTEN-->
+            <main>
+                <div class="cards">
+                    <div class="card-single">
+                        <div>
+                            <span>Income</span>
+                            <h1>100.000</h1>
+                        </div>
+                        <div>
+                            <span class="las la-wallet"></span>
+                        </div>
+                    </div>
+                    <div class="card-single">
+                        <div>
+                            <span>Expense</span>
+                            <h1>0</h1>
+                        </div>
+                        <div>
+                            <span class="las la-wallet"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-grid">
+                    <div class="chart" id="income-chart">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div class="selling-report">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Top Selling Product</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="product">
+                                    <div class="info">
+                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
+                                        <div>
+                                            <h3>Baju</h3>
+                                            <small>Kategori :</small><br>
+                                            <small>Total :</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product">
+                                    <div class="info">
+                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
+                                        <div>
+                                            <h3>Baju</h3>
+                                            <small>Kategori :</small><br>
+                                            <small>Total :</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product">
+                                    <div class="info">
+                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
+                                        <div>
+                                            <h3>Baju</h3>
+                                            <small>Kategori :</small><br>
+                                            <small>Total :</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="chartdashboard.js"></script>
+    </body>
+</html>
