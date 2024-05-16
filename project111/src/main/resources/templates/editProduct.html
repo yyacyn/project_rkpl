@@ -39,12 +39,9 @@
             <div class="form-group my-2 flex items-center mx-auto">
                 <label for="input-category"></label>
                 <select id="select-category" name="select-category"
-                    class="w-full bg-amber-100 p-3 rounded-lg flex justify-center " th:field="${productDto.category}">
+                    class="w-full bg-amber-100 p-3 rounded-lg flex justify-center " th:field="${productDto.category}" required>
                     <option value="">Select category</option>
-                    <option value="shirt">Shirt</option>
-                    <option value="jean">Jean</option>
-                    <option value="dress">Dress</option>
-                    <option value="shoe">Shoe</option>
+                    <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
                 </select>
             </div>
         </div>

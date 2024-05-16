@@ -15,4 +15,6 @@
 //         repo.save(product);
 //     }
 
+//     public List<Product> searchProducts(String query);
+
 // }

@@ -76,40 +76,40 @@
             <div class="order-form-container flex flex-row mx-auto text-sm">
                 <div class="form bg-white p-5 rounded-lg w-[350px] shadow-md">
                     <h1 class="text-center text-2xl font-bold">Order Form</h1>
-                    <form action="orderform.php" method="POST">
+                    <form method="POST" enctype="multipart/form-data" th:object="${invoiceDto}">
                         <div class="form-group my-2">
                             <label for="name">Customer name</label><br>
-                            <input type="text" name="name" id="name" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                            <input type="text" name="name" id="name" class="form-control bg-amber-100 p-2 rounded-lg w-full" required th:field="${invoiceDto.cus_name}">
                         </div>
                         <div class="form-group my-2">
                             <label for="date">Date</label><br>
-                            <input type="date" name="date" id="date" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                            <input type="date" name="date" id="date" class="form-control bg-amber-100 p-2 w-full rounded-lg" required th:field="${invoiceDto.date}">
                             </input>
                         </div>
                         <div class="form-group my-2">
                             <label for="product">Product code</label><br>
-                            <input type="text" name="product-code" id="product-code" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
+                            <input type="text" name="product-code" id="product-code" class="form-control bg-amber-100 p-2 w-full rounded-lg" required th:field="${invoiceDto.p_code}">
                             </input>
                         </div>
-                        <div class="form-group my-2">
+                        <!-- <div class="form-group my-2">
                             <label for="product-name">Product name</label><br>
-                            <input type="text" name="product-name" id="product-name" class="form-control bg-amber-100 p-2 w-full rounded-lg" required>
-                        </div>
+                            <input type="text" name="product-name" id="product-name" class="form-control bg-amber-100 p-2 w-full rounded-lg" readonly th:text="${}">
+                        </div> -->
                         <div class="form-group my-2">
                             <label for="product-price">Price</label><br>
-                            <input type="text" name="price" id="price" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                            <input type="text" name="price" id="price" class="form-control bg-amber-100 p-2 rounded-lg w-full" required th:field="${invoiceDto.price}">
                         </div>
                         <div class="form-group my-2">
-                            <label for="product-stock">Stock</label><br>
-                            <input type="text" name="stock" id="stock" class="form-control bg-amber-100 p-2 rounded-lg w-full" required>
+                            <label for="product-qty">Quantity</label><br>
+                            <input type="text" name="qty" id="qty" class="form-control bg-amber-100 p-2 rounded-lg w-full" th:field="${invoiceDto.qty}" required>
                             </input>
                         </div>
                         <div class="lower-form flex flex-row justify-between items-center">
-                            <div class="form-group mt-5 text-xs">
+                            <!-- <div class="form-group mt-5 text-xs">
                                 <label for="quantity">Quantity:</label>
                                 <input type="text" name="quantity" id="quantity" class="form-control bg-amber-100 p-1 rounded-lg w-20 ml-1" required>
                                 </input>
-                            </div>
+                            </div> -->
                             <button type="submit" class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300">Add order</button>
                         </div>
                     </form>
@@ -138,26 +138,6 @@
                                 <td class="border px-4 py-2">10</td>
                                 <td class="border px-4 py-2">2</td>
                                 <td class="border px-4 py-2">Rp. 200.000</td>
-                                <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">2</td>
-                                <td class="border px-4 py-2">P002</td>
-                                <td class="border px-4 py-2">Celana</td>
-                                <td class="border px-4 py-2">Rp. 150.000</td>
-                                <td class="border px-4 py-2">5</td>
-                                <td class="border px-4 py-2">3</td>
-                                <td class="border px-4 py-2">Rp. 450.000</td>
-                                <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">3</td>
-                                <td class="border px-4 py-2">P003</td>
-                                <td class="border px-4 py-2">Topi</td>
-                                <td class="border px-4 py-2">Rp. 50.000</td>
-                                <td class="border px-4 py-2">15</td>
-                                <td class="border px-4 py-2">1</td>
-                                <td class="border px-4 py-2">Rp. 50.000</td>
                                 <td class="border px-4 py-2 justify-center"><button class="btn bg-red-200 px-3 py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-red-100">Delete</button></td>
                             </tr>
                         </tbody>
@@ -209,26 +189,6 @@
                                     <td class="border px-4 py-2">Rp. 200.000</td>
                                     <td class="border px-4 py-2">Rp. 0</td>
                                     <td class="border px-4 py-2">Rp. 200.000</td>
-                                </tr>
-                                <tr>
-                                    <td class="border px-4 py-2">2</td>
-                                    <td class="border px-4 py-2">Joko</td>
-                                    <td class="border px-4 py-2">12/12/2021</td>
-                                    <td class="border px-4 py-2">Celana</td>
-                                    <td class="border px-4 py-2">3</td>
-                                    <td class="border px-4 py-2">Rp. 450.000</td>
-                                    <td class="border px-4 py-2">Rp. 0</td>
-                                    <td class="border px-4 py-2">Rp. 450.000</td>
-                                </tr>
-                                <tr>
-                                    <td class="border px-4 py-2">3</td>
-                                    <td class="border px-4 py-2">Joni</td>
-                                    <td class="border px-4 py-2">12/12/2021</td>
-                                    <td class="border px-4 py-2">Topi</td>
-                                    <td class="border px-4 py-2">1</td>
-                                    <td class="border px-4 py-2">Rp. 50.000</td>
-                                    <td class="border px-4 py-2">Rp. 0</td>
-                                    <td class="border px-4 py-2">Rp. 50.000</td>
                                 </tr>
                             </tbody>
                         </table>

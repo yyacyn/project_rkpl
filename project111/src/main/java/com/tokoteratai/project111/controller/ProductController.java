@@ -22,9 +22,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tokoteratai.project111.model.Product;
 import com.tokoteratai.project111.model.ProductDto;
+import com.tokoteratai.project111.repository.CategoryRepository;
+import com.tokoteratai.project111.repository.InvoiceRepository;
 import com.tokoteratai.project111.repository.ProductRepository;
+import com.tokoteratai.project111.model.Category;
+import com.tokoteratai.project111.model.CategoryDto;
+import com.tokoteratai.project111.model.Invoice;
+import com.tokoteratai.project111.model.InvoiceDto;
 
-import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 
 @Controller
@@ -32,12 +37,36 @@ import jakarta.validation.Valid;
 public class ProductController {
 
     @Autowired
+    private InvoiceRepository irepo;
+
+    @Autowired
     private ProductRepository repo;
+
+    @Autowired
+    private CategoryRepository crepo;
 
     @GetMapping("/product_page")
     public String showProductList(Model model) {
         List<Product> product = repo.findAll();
         model.addAttribute("products", product);
+
+        List<Category> category = crepo.findAll();
+        model.addAttribute("categories", category);
+        return "productpage";
+    }
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam(name = "query", required = false) String query, Model model) {
+        List<Product> products;
+        if (query == null) {
+            products = repo.findAll();
+        } else {
+            products = repo.findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(query, query);
+        }
+
+        List<Category> category = crepo.findAll();
+        model.addAttribute("categories", category);
+        model.addAttribute("products", products);
         return "productpage";
     }
     
@@ -63,8 +92,30 @@ public class ProductController {
     // }
 
     @GetMapping("/order_form")
-    public String orderForm() {
+    public String orderForm(Model model) {
+        List<Invoice> invoice = irepo.findAll();
+        model.addAttribute("invoices", invoice);
         return "orderform";
+    }
+
+    @GetMapping("/create_invoice")
+    public String showCreateInvoicePage(Model model) {
+        InvoiceDto invoiceDto = new InvoiceDto();
+        model.addAttribute("invoiceDto", invoiceDto);
+        return "orderform";
+    }
+
+    @PostMapping("/create_invoice")
+    public String CreateInvoice(@jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result) {
+
+        Invoice invoice = new Invoice();
+        invoice.setCus_name(invoiceDto.getCus_name());
+        invoice.setDate(invoiceDto.getDate());
+        invoice.setP_code(invoiceDto.getP_code());
+        invoice.setPrice(invoiceDto.getPrice());
+        invoice.setQty(invoiceDto.getQty());
+        irepo.save(invoice);
+        return "redirect:/orderform";
     }
 
     @GetMapping("/create")
@@ -74,9 +125,61 @@ public class ProductController {
     
         List<Product> product = repo.findAll(Sort.by(Sort.Direction.DESC, "code"));
         model.addAttribute("products", product);
+
+        List<Category> category = crepo.findAll();
+        model.addAttribute("categories", category);
     
         return "create";
     }
+
+    @GetMapping("/createc")
+    public String showCreateCategoryPage(Model model) {
+        CategoryDto categoryDto = new CategoryDto();
+        model.addAttribute("categoryDto", categoryDto);
+
+        List<Category> category = crepo.findAll();
+        model.addAttribute("categories", category);
+    
+        // List<Product> product = repo.findAll(Sort.by(Sort.Direction.DESC, "code"));
+        // model.addAttribute("products", product);
+    
+        return "createc";
+    }
+
+    @PostMapping("/createc")
+    public String CreateCategoryPage(@jakarta.validation.Valid @ModelAttribute CategoryDto categoryDto, BindingResult result) {
+
+        MultipartFile image = categoryDto.getImgurl();
+        Date createdAt = new Date();
+
+        String storageFileName = createdAt.getTime() + "_" +image.getOriginalFilename();
+
+        try {
+            String uploadDir = "public/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
+        Category category = new Category();
+        category.setName(categoryDto.getName());
+        category.setImgurl(storageFileName);
+
+
+        crepo.save(category);
+        return "redirect:/createc";
+    }
+
+
 
     @PostMapping("/create")
     public String CreatePage(@jakarta.validation.Valid @ModelAttribute ProductDto productDto, BindingResult result) {
@@ -116,16 +219,53 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-public String updateProduct(Model model, @Valid @ModelAttribute ProductDto productDto, BindingResult result) {
+    public String updateProduct(Model model, @RequestParam Integer code, @Valid @ModelAttribute ProductDto productDto, BindingResult result) {
     try {
-        repo.updateByCode(productDto.getName(), productDto.getCategory(), productDto.getS_price(), productDto.getP_price(), productDto.getStock(), productDto.getCode());
-    } catch(Exception ex) {
+        Product product = repo.findById(code).get();
+        model.addAttribute("product", product);
+
+        if (result.hasErrors()) {
+            return "edit";
+        }
+
+        if (!productDto.getImgurl().isEmpty()) {
+            String uploadDir = "public/images/";
+            Path oldImagePath = Paths.get(uploadDir + product.getImgurl());
+            try {
+                Files.delete(oldImagePath);
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
+
+            MultipartFile image = productDto.getImgurl();
+            Date createdAt = new Date();
+            String storageFileName = createdAt.getTime() + "_" + image.getOriginalFilename();
+
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+
+            }
+            
+            product.setImgurl(storageFileName);
+        }
+
+        product.setName(productDto.getName());
+        product.setCategory(productDto.getCategory());
+        product.setS_price(productDto.getS_price());
+        product.setP_price(productDto.getP_price());
+        product.setStock(productDto.getStock());
+
+        repo.save(product);
+
+    } 
+    
+    catch(Exception ex) {
         System.out.println("Exception: " + ex.getMessage());
         return "redirect:/create";  
     }
 
     return "redirect:/create";
-}
+    }
 
     @GetMapping("/edit")
     public String showEditPage (
@@ -150,6 +290,9 @@ public String updateProduct(Model model, @Valid @ModelAttribute ProductDto produ
             return "redirect:/create";  
         }
 
+        List<Category> category = crepo.findAll();
+        model.addAttribute("categories", category);
+
         return "editProduct";
     }
 
@@ -158,11 +301,4 @@ public String updateProduct(Model model, @Valid @ModelAttribute ProductDto produ
         repo.deleteByCode(code);
         return "redirect:/create";
     }
-
-    // @PostMapping("/save")
-    // public String saveProduct(@ModelAttribute Product product) {
-    //     service.save(product);
-    //     return "redirect:/input_form";
-    // }
-
 }

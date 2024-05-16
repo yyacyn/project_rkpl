@@ -25,7 +25,7 @@
 //     @Autowired
 //     private CategoryRepository repo;
 
-//     @GetMapping("/list")
+//     @GetMapping("/product_page")
 //     public String showCategoryList(Model model) {
 //         List<Category> categories = repo.findAll();
 //         model.addAttribute("categories", categories);
