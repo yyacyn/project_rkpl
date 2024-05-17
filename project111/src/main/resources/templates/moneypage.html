@@ -100,181 +100,46 @@
             </div>
             <div class="income-content flex flex-row mt-10 text-sm mx-auto" id="income-content">
                 <div class="income-table h-[500px] overflow-auto overflow-x-hidden w-[780px]">
-                    <table class="table-auto">
+                    <table class="table-auto w-[750px]">
                         <thead class="bg-amber-200">
                             <tr>
                                 <th class="px-4 py-2">Date & Time</th>
                                 <th class="px-4 py-2">Order ID</th>
                                 <th class="px-4 py-2">Customer's name</th>
-                                <th class="px-4 py-2">Quantity</th>
+                                <th class="px-4 py-2">Qty</th>
                                 <th class="px-4 py-2">Payment method</th>
                                 <th class="px-4 py-2">Total</th>
                             </tr>
                         </thead>
                         <tbody class="bg-amber-100 text-center">
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
+                            <tr th:each="income : ${incomes}">
+                                <td class="border-0 px-4 py-2" th:text="${income.date}"></td>
+                                <td class="border-0 px-4 py-2" th:text="${income.oid}"></td>
+                                <td class="border-0 px-4 py-2" th:text="${income.cus_name}"></td>
+                                <td class="border-0 px-4 py-2" th:text="${income.qty}"></td>
+                                <td class="border-0 px-4 py-2" th:text="${income.paymethod}"></td>
+                                <td class="border-0 px-4 py-2" th:text="@{'Rp. ' + ${income.total}}"></td>
                             </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">123456</td>
-                                <td class="border-0 px-4 py-2">John Doe</td>
-                                <td class="border-0 px-4 py-2">2</td>
-                                <td class="border-0 px-4 py-2">Cash</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>
                 <aside class="flex flex-col text-sm justify-start items-center ml-5">
                     <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
                         <label for="cash-value" class="font-semibold">Cash</label>
-                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" th:value="@{'Rp. '+ ${sumCash}}" readonly>
                     </div>
                     <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
                         <label for="cash-value" class="font-semibold">QRIS</label>
-                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumQris}}" readonly>
                     </div>
                     <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
                         <label for="cash-value" class="font-semibold">Belum bayar</label>
-                        <input type="text" value="200000" class="bg-amber-300 font-normal" readonly>
+                        <input type="text" value="200000" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumBelumLunas}}" readonly>
                     </div>
                     <div class="edit-data flex items-center justify-center">
-                        <button class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all">
-                            <box-icon name='wallet' class="mr-1"></box-icon>Edit Data</button>
+                        <a href="/delete_all_income" class="bg-red-500 w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all" onclick="return confirm('Are you sure to DELETE ALL income data?')">
+                            <box-icon name='wallet' class="mr-1"></box-icon>Delete All Data</a>
                     </div>
                 </aside>
             </div>
@@ -289,66 +154,44 @@
                             </tr>
                         </thead>
                         <tbody class="bg-amber-100 text-center">
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
-                            </tr>
-                            <tr>
-                                <td class="border-0 px-4 py-2">2021-10-10 10:00</td>
-                                <td class="border-0 px-4 py-2">Rp. 200.000</td>
-                                <td class="border-0 px-4 py-2">Buy a new chair</td>
+                            <tr th:each="expense : ${expenses}">
+                                <td class="border-0 px-4 py-2" th:text="${expense.date}"></td>
+                                <td class="border-0 px-4 py-2" th:text="@{'Rp. ' + ${expense.amount}}"></td>
+                                <td class="border-0 px-4 py-2" th:text="${expense.info}"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <aside class="flex flex-col text-sm justify-start items-center ml-5">
-                    <div class="h1 w-full flex justify-start text-start">
-                        <h1 class="mb-2 text-lg font-semibold">Expenses</h1>
-                    </div>
-                    <div class="container flex flex-col bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
-                        <div class="date mt-3">
-                            <label for="date">Date:</label>
-                            <select name="expense-date" id="expense-date" class="ml-2 bg-white rounded-lg shadow-md ">
-                                <option value="today">Today</option>
-                                <option value="week">This week</option>
-                                <option value="month">This month</option>
-                                <option value="year">This year</option>
-                            </select>
+                    <form method="post" enctype="multipart/form-data" th:object="${expenseDto}">
+                        <div class="h1 w-full flex justify-start text-start">
+                            <h1 class="mb-2 text-lg font-semibold">Add Expenses</h1>
                         </div>
-                        <div class="amount-of-money mt-5">
-                            <label for="amount-of-money" class="font-semibold">Amount of money</label>
-                            <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" readonly>
+                        <div class="container flex flex-col bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                            <div class="date mt-3">
+                                <label for="date">Date:</label>
+                                <input type="datetime-local" name="" id="" class="p-1 rounded-lg" th:field="${expenseDto.date}">
+                            </div>
+                            <div class="amount-of-money mt-5">
+                                <label for="amount-of-money" class="font-semibold">Amount of money</label>
+                                <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" th:field="${expenseDto.amount}">
+                            </div>
+                            <div class="information mt-5 mb-5">
+                                <label for="amount-of-money" class="font-semibold">Information</label>
+                                <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" th:field="${expenseDto.info}">
+                            </div>
                         </div>
-                        <div class="information mt-5 mb-5">
-                            <label for="amount-of-money" class="font-semibold">Information</label>
-                            <input type="text" value="200000" class="bg-amber-200 font-normal h-10 pl-2 rounded-lg" readonly>
+                        <div class="buttons flex flex-col">
+                            <div class="save-button flex items-center justify-end float-end">
+                                <button class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all" type="submit">
+                                    <box-icon name='wallet' class="mr-1"></box-icon>Add Expense</button>
+                            </div>
+                            <div class="save-button flex items-center justify-end float-end">
+                                <a href="/delete_all_expense" class="bg-red-500 w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all">
+                                    <box-icon name='wallet' class="mr-1"></box-icon>Delete All Expense</a>
                         </div>
-                    </div>
-                    <div class="save-button flex items-center justify-end float-end">
-                        <button class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all">
-                            <box-icon name='wallet' class="mr-1"></box-icon>Save</button>
-                    </div>
+                        </div>
+                    </form>
                 </aside>
             </div>
         </div>

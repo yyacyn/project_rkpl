@@ -1,20 +1,274 @@
+<?php
+require 'function.php';
+require 'cek.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" enctype="multipart/form-data" th:object="${categoryDto}">
-        <label for="categoryName">Category Name:</label>
-        <input type="text" id="categoryName" name="categoryName"  th:field="${categoryDto.name}" required>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+        <link href="ctreatecstyles.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+/* styles.css */
 
-        <label for="imgurl">Image:</label>
-        <input type="file" id="imgurl" name="imgurl" th:field="${categoryDto.imgurl}" required><br><br>
-        
-        <br>
-        <input type="submit" value="Create Category">
-    </form>
-</body>
+/* Form Container */
+.form {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Input Field */
+.input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #F3E99F;
+}
+
+.input-file input[type="file"] {
+    width: 100%;
+    background-color: #F3E99F; 
+    padding: 0.5rem; 
+    border-radius: 0.25rem; 
+}
+
+/* File Upload Container */
+.file-upload {
+    margin-top: 1rem;
+}
+
+/* Upload Label */
+.upload-label {
+    cursor: pointer;
+}
+
+/* Upload Icon */
+.icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+/* Button */
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #F6E05E;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #FACC15;
+}
+
+/* Table Container */
+.transaction-table {
+    background-color: #fff;
+    width: 150%;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Title */
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    margin-top: 2rem;
+}
+
+/* Header Row */
+.header-row {
+    background-color: #F7D060;
+    color: #fff;
+    border: 1px solid #F7D060;
+}
+
+/* Table Data */
+.category-picture,
+.category-name,
+.action-buttons {
+    border: 0.25px solid #ccc;
+}
+
+/* Delete Button */
+.delete-btn {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #EF4444;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #DC2626;
+}
+
+        </style>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html"><strong>DASHBOARD</strong></a>
+            <button class="order-1 btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#"><i class="las la-bars"></i></button>
+
+            <!-- Navbar Search-->
+            <form class="my-2 ml-auto mr-0 d-none d-md-inline-block form-inline mr-md-3 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Navbar-->
+            <ul class="ml-auto navbar-nav ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="logout.php">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="sidebar-brand">
+                            <span>
+                                <img src="teratai7.png" width="90%px" />
+                            </span>
+                        </div>
+                        <div class="nav">
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="las la-home"></i></div>
+                                DASHBOARD
+                            </a>
+                            <a class="nav-link" href="product.html">
+                                <div class="sb-nav-link-icon"><i class="las la-clipboard-list"></i></div>
+                                PRODUCT
+                            </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="las la-warehouse"></i></i></div>
+                                STORAGE
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="masuk.html">BARANG MASUK</a>
+                                    <a class="nav-link" href="stock.html">STOCK</a>
+                                    <a class="nav-link" href="keluar.html">BARANG KELUAR</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <!--KONTEN-->
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4"></h1>
+                        <div class="row">
+                            <div class="col-xl-2.5 col-md-6">
+                                <div class="form" id="categoryForm">
+                                    <h1 class="title">Create Category</h1>
+                                    <form method="POST" enctype="multipart/form-data" th:object="${categoryDto}">
+                                        <div class="form-group">
+                                            <label for="categoryName">Category Name:</label><br>
+                                            <input type="text" id="categoryName" name="categoryName" th:field="${categoryDto.name}" class="input" required>
+                                        </div>
+                                
+                                        <div class="form-group file-upload">
+                                            <label for="imgurl" class="upload-label">
+                                                <box-icon name='image-add' class="icon"></box-icon> Upload picture
+                                            </label>
+                                            <div class="input-file">
+                                                <input type="file" id="imgurl" name="imgurl" th:field="${categoryDto.imgurl}" accept="image/png, image/gif, image/jpeg, image/jpg" class="hidden" required>
+                                            </div>
+                                        </div>
+                                        <div class="lower-form">
+                                            <input type="submit" value="Create" class="button">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-xl-2.5 col-md-4">
+                                <div class="transaction-table" id="categoryTable">
+                                    <h1 class="title">Category</h1>
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="header-row">
+                                                <th>Picture</th>
+                                                <th>Category</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="body-content">
+                                            <tr th:each="category : ${categories}">
+                                                <td class="category-picture">
+                                                    <img th:src="@{'/images/' + ${category.imgurl}}" alt="product image" width="30%">
+                                                </td>
+                                                <td class="category-name" th:text="${category.name}"></td>
+                                                <td class="action-buttons">
+                                                    <form th:action="@{/delete_category/{id}(id=${category.id})}" method="post"
+                                                    onsubmit="return confirm('Are you sure you want to delete?')" class="action-buttons">
+                                                    <button
+                                                        class="delete-btn"
+                                                        type="submit">Delete</button>
+                                                </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/datatables-demo.js"></script>
+    </body>
 </html>

@@ -1,5 +1,10 @@
 package com.tokoteratai.project111.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.springframework.cglib.core.Local;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,9 +21,11 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cus_name;
-    private String date;
+    private LocalDateTime date;
     private Integer price;
     private Integer qty;
+    private String paymethod;
+    private String Status;
 
     @ManyToOne
     @JoinColumn(name = "p_code")
@@ -27,12 +34,15 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Integer id, String cus_name, String date, Integer price, Integer qty, Product p_code) {
+    public Invoice(Integer id, String cus_name, LocalDateTime date, Integer price, Integer qty, String paymethod,
+            String status, Product p_code) {
         this.id = id;
         this.cus_name = cus_name;
         this.date = date;
         this.price = price;
         this.qty = qty;
+        this.paymethod = paymethod;
+        Status = status;
         this.p_code = p_code;
     }
 
@@ -52,11 +62,11 @@ public class Invoice {
         this.cus_name = cus_name;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -74,6 +84,22 @@ public class Invoice {
 
     public void setQty(Integer qty) {
         this.qty = qty;
+    }
+
+    public String getPaymethod() {
+        return paymethod;
+    }
+
+    public void setPaymethod(String paymethod) {
+        this.paymethod = paymethod;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public Product getP_code() {

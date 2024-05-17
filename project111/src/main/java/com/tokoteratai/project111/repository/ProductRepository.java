@@ -25,4 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     void updateByCode(@Param("name") String name, @Param("category") String category, @Param("s_price") Integer s_price, @Param("p_price") Integer p_price, @Param("stock") Integer stock, @Param("code") Integer code);
 
     List<Product> findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(String name, String category);
+
+    List<Product> findByCategoryContainingIgnoreCase(String category);
 }

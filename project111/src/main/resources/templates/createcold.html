@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data" th:object="${categoryDto}">
+        <label for="categoryName">Category Name:</label>
+        <input type="text" id="categoryName" name="categoryName"  th:field="${categoryDto.name}" required>
+
+        <label for="imgurl">Image:</label>
+        <input type="file" id="imgurl" name="imgurl" th:field="${categoryDto.imgurl}" required><br><br>
+        
+        <br>
+        <input type="submit" value="Create Category">
+    </form>
+</body>
+</html>

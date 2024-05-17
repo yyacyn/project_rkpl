@@ -6,16 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.tokoteratai.project111.model.Invoice;
+import com.tokoteratai.project111.model.Amount;
 
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface InvoiceRepository extends JpaRepository <Invoice, Integer>{
+public interface AmountRepository extends JpaRepository <Amount, Integer>{
 
-    // @Modifying
-    // @Transactional
-    // @Query(value = "DELETE FROM Invoice WHERE id = :id", nativeQuery = true)
-    // void deleteById(@Param("id") Integer id);
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM Amount WHERE id = :id", nativeQuery = true)
+    void deleteByCode(@Param("id") Integer id);
 
 }

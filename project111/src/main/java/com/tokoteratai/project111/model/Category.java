@@ -13,7 +13,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
 
     @Column(columnDefinition = "TEXT")
@@ -23,17 +23,17 @@ public class Category {
         super();
     }
 
-    public Category(int id, String name, String imgurl) {
+    public Category(Integer id, String name, String imgurl) {
         this.id = id;
         this.name = name;
         this.imgurl = imgurl;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

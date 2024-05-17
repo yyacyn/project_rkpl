@@ -3,18 +3,40 @@ package com.tokoteratai.project111.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class InvoiceDto {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "income")
+public class Income {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cus_name;
     private LocalDateTime date;
-    private Integer price;
+    private Integer total;
     private Integer qty;
-    private Integer p_code;
+    private Integer oid;
     private String paymethod;
     private String status;
 
-    public InvoiceDto() {
+    public Income() {
+    }
+
+    public Income(Integer id, String cus_name, LocalDateTime date, Integer total, Integer qty, Integer oid,
+            String paymethod, String status) {
+        this.id = id;
+        this.cus_name = cus_name;
+        this.date = date;
+        this.total = total;
+        this.qty = qty;
+        this.oid = oid;
+        this.paymethod = paymethod;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -41,12 +63,12 @@ public class InvoiceDto {
         this.date = date;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getTotal() {
+        return total;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public Integer getQty() {
@@ -57,12 +79,12 @@ public class InvoiceDto {
         this.qty = qty;
     }
 
-    public Integer getP_code() {
-        return p_code;
+    public Integer getOid() {
+        return oid;
     }
 
-    public void setP_code(Integer p_code) {
-        this.p_code = p_code;
+    public void setOid(Integer oid) {
+        this.oid = oid;
     }
 
     public String getPaymethod() {
