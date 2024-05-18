@@ -1,81 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet"
-        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <title>Print</title>
+    <title>Document</title>
+    <style>
+        @media print {
+            .btn-done {
+                display: none;
+            }   
+        }
+    </style>
+    <title>Stock Barang</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 </head>
-
-<body class="text-xs">
-    <div class="invoice flex mx-auto text-xs">
-        <div
-            class="invoice-container bg-white p-5 rounded-lg w-[1120px] h-[575px] my-5">
-            <h1 class="text-center text-2xl font-bold">Invoice</h1>
-            <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
-                <thead class="text-xs">
-                    <tr class="bg-amber-100">
-                        <th class="px-4 py-2 resize w-[30px]">No</th>
-                        <th class="px-4 py-2 resize">Customer name</th>
-                        <th class="px-4 py-2 resize w-[130px]">Date</th>
-                        <th class="px-4 py-2">Product name</th>
-                        <th class="px-4 py-2 resize w-[20px]">Qty</th>
-                        <th class="px-4 py-2">Price</th>
-                        <!-- <th class="px-4 py-2">Return</th> -->
-                        <th class="px-4 py-2">Total</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm rounded-md overflow-scroll">
-                    <tr th:each="invoice, stat : ${invoices}" class="text-center">
-                        <td class="border px-4 py-2" th:text="${stat.count}"></td>
-                        <td class="border px-4 py-2" th:text="${invoice.cus_name}"></td>
-                        <td class="border px-4 py-2" th:text="${#temporals.format(invoice.date, 'yyyy-MM-dd')}"></td>
-                        <td class="border px-4 py-2" th:text="${invoice.p_code.name}"></td>
-                        <td class="border px-4 py-2" th:text="${invoice.qty}"></td>
-                        <td class="border px-4 py-2" th:text="@{'Rp. ' + ${invoice.price}}">Rp. 200.000</td>
-                        <td class="border px-4 py-2" th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}">Rp. 200.000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="invoice-form-lower mt-5 flex flex-col float-end">
-                <div class="total text-xs">
-                    <div class="form-group-transaction my-2">
-                        <label for="return">Paid Amount (Rp):</label><br>
-                        <input type="text" name="price" id="in_amount"
-                            class="form-control bg-amber-100 px-2 py-1 rounded-lg" th:value="@{'Rp. ' +${totalAmount}}"
-                            readonly>
+<body>
+    <body>
+        <div class="container">
+            <h2>Invoice</h2>
+            <div class="data-tables datatable-dark">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Order id</th>
+                            <th>Customer name</th>
+                            <th>Date</th>
+                            <th>Product name</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="invoice, stat : ${invoices}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${invoice.id}"></td>
+                            <td th:text="${invoice.cus_name}"></td>
+                            <td th:text="${#temporals.format(invoice.date, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${invoice.p_code.name}"></td>
+                            <td th:text="${invoice.qty}"></td>
+                            <td th:text="@{'Rp. ' + ${invoice.price}}">Rp. 200.000</td>
+                            <td th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}">Rp. 200.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <div>
+                        <div>
+                            <label for="return">Paid Amount (Rp):</label><br>
+                            <input type="text" name="price" id="in_amount" th:value="@{'Rp. ' +${totalAmount}}" readonly>
+                        </div>
+                        <div>
+                            <label for="return">Return (Rp):</label><br>
+                            <input type="text" name="price" id="price" th:value="@{'Rp. ' + ${totalAmount - total}}" readonly>
+                        </div>
+                        <div>
+                            <label for="return">Total (Rp):</label><br>
+                            <input type="text" name="price" id="price" th:value="@{'Rp. ' + ${total}}" readonly>
+                        </div>
                     </div>
-                    <div class="form-group-transaction my-2">
-                        <label for="return">Return (Rp):</label><br>
-                        <input type="text" name="price" id="price"
-                            class="form-control bg-amber-100 px-2 py-1 rounded-lg" th:value="@{'Rp. ' + ${totalAmount - total}}"
-                            readonly>
+                    <div>
+                        <button type="button" class="btn-done" onclick="window.print()">Print now</button>
                     </div>
-                    <div class="form-group-transaction my-2">
-                        <label for="return">Total (Rp):</label><br>
-                        <input type="text" name="price" id="price"
-                            class="form-control bg-amber-100 px-2 py-1 rounded-lg" th:value="@{'Rp. ' + ${total}}"
-                            readonly>
-                    </div>
-                </div>
-                <div class="btn-done">
-                    <button type="button"
-                        class="py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all"
-                        onclick="window.print()">Print now</button>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    
+        <script>
+            $(document).ready(function() {
+                $('#mauexport').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+        </script>
+    
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    
+    
 </body>
-
 </html>

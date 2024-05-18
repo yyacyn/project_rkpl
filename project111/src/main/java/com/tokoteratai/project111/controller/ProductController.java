@@ -5,13 +5,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,8 +104,99 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String showIndex(Model model) {
+
+        List<Invoice> invoices = irepo.findAll();
+        model.addAttribute("invoices", invoices);
+
+        List<Product> product = repo.findAll();
+        model.addAttribute("products", product);
+
+        Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
+        model.addAttribute("total", total);
+
+        List<Amount> amounts = arepo.findAll();
+        model.addAttribute("amounts", amounts);
+
+        Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
+        model.addAttribute("totalAmount", totalAmount);
+
+        List<Income> incomes = inrepo.findAll();
+        model.addAttribute("incomes", incomes);
+
+        List<Expense> expenses = exrepo.findAll();
+        model.addAttribute("expenses", expenses);
+
+        Integer totalIncome = incomes.stream().mapToInt(Income::getTotal).sum();
+        model.addAttribute("totalIncome", totalIncome);
+
+        Integer totalExpense = expenses.stream().mapToInt(Expense::getAmount).sum();
+        model.addAttribute("totalExpense", totalExpense);
+
+        Integer sumQris = inrepo.sumTotalByPaymethod("qris");
+        Integer sumCash = inrepo.sumTotalByPaymethod("cash");
+        Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
+
+        model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
+        model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
+        model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
+
+        Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
+        model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
+
+        Integer sumLunas = inrepo.sumTotalByStatus("lunas");
+        model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
+
+        Map<Product, Integer> productQuantities = new HashMap<>();
+        Integer topQuantity = 0;
+        Product topSellingProduct = null;
+
+        for (Income income : incomes) {
+            Product incomeProduct = income.getP_code();
+            Integer quantity = income.getQty();
+            productQuantities.put(incomeProduct, productQuantities.getOrDefault(incomeProduct, 0) + quantity);
+
+            if (productQuantities.get(incomeProduct) > topQuantity) {
+                topQuantity = productQuantities.get(incomeProduct);
+                topSellingProduct = incomeProduct;
+            }
+        }
+
+        model.addAttribute("topSellingProduct", topSellingProduct);
+        model.addAttribute("topQuantity", topQuantity);
+
+
+
         return "index";
+    }
+
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateStatus(@RequestParam Integer id, @RequestParam String status) {
+        // Fetch the order by its ID
+        Optional<Invoice> invoOptional = irepo.findById(id);
+        if (!invoOptional.isPresent()) {
+            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
+        }
+
+        // Update the status
+        Invoice invoice = invoOptional.get();
+        invoice.setStatus(status);
+        irepo.save(invoice);
+
+            // Fetch the income by its ID
+        Optional<Income> incomeOptional = inrepo.findById(id);
+        if (!incomeOptional.isPresent()) {
+            return new ResponseEntity<>("Income not found", HttpStatus.NOT_FOUND);
+        }
+
+        // Update the status
+        Income income = incomeOptional.get();
+        income.setStatus(status);
+        inrepo.save(income);
+
+
+
+        return new ResponseEntity<>("Status updated successfully", HttpStatus.OK);
     }
 
     @GetMapping("/money_page")
@@ -131,20 +231,27 @@ public class ProductController {
         List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
         model.addAttribute("statusValues", statusValues);
 
-        List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit atau Debit");
+        List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
         model.addAttribute("paymentMethod", paymentMethod);
+
+        
 
         List<Income> incomes = inrepo.findAll();
         model.addAttribute("incomes", incomes);
 
         Integer sumQris = inrepo.sumTotalByPaymethod("qris");
         Integer sumCash = inrepo.sumTotalByPaymethod("cash");
+        Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
 
         model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
         model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
+        model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
 
         Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
         model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
+
+        Integer sumLunas = inrepo.sumTotalByStatus("lunas");
+        model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
 
         return "moneypage";
     }
@@ -226,6 +333,71 @@ public class ProductController {
         return "orderform";
     }
 
+    @GetMapping("/edit_income")
+    public String showIncomeEdit(Model model, @RequestParam Integer id) {
+        List<Invoice> invoices = irepo.findAll();
+        model.addAttribute("invoices", invoices);
+
+        List<Product> product = repo.findAll();
+        model.addAttribute("products", product);
+
+        List<Amount> amounts = arepo.findAll();
+        model.addAttribute("amounts", amounts);
+
+        Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
+        model.addAttribute("total", total);
+
+        Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
+        model.addAttribute("totalAmount", totalAmount);
+
+        InvoiceDto invoiceDto = new InvoiceDto();
+        model.addAttribute("invoiceDto", invoiceDto);
+
+        AmountDto amountDto = new AmountDto();
+        model.addAttribute("amountDto", amountDto);
+
+        List<Expense> expenses = exrepo.findAll();
+        model.addAttribute("expenses", expenses);
+
+        ExpenseDto expenseDto = new ExpenseDto();
+        model.addAttribute("expenseDto", expenseDto);
+
+        List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
+        model.addAttribute("statusValues", statusValues);
+
+        List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
+        model.addAttribute("paymentMethod", paymentMethod);
+
+        Invoice invoice = new Invoice(); // create a new invoice or fetch an existing one
+        model.addAttribute("invoice", invoice);
+
+        // Income income = new Income(); // create a new invoice or fetch an existing one
+        // // model.addAttribute("income", income);
+
+        Income income = inrepo.findById(id).get();
+        model.addAttribute("income", income);
+        
+
+        Integer sumQris = inrepo.sumTotalByPaymethod("qris");
+        Integer sumCash = inrepo.sumTotalByPaymethod("cash");
+        Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
+
+        model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
+        model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
+        model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
+
+        Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
+        model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
+
+        Integer sumLunas = inrepo.sumTotalByStatus("lunas");
+        model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
+
+
+        return "editIncome";
+    }
+
+
+
     @PostMapping("/order_form")
     public String CreateInvoice(@jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result) {
 
@@ -264,6 +436,7 @@ public class ProductController {
         income.setTotal(invoice.getPrice() * invoice.getQty());
         income.setPaymethod(invoice.getPaymethod());
         income.setStatus(invoice.getStatus());
+        income.setP_code(product);
         inrepo.save(income);
 
         // Decrease the product stock by the quantity
@@ -404,6 +577,33 @@ public class ProductController {
         return "redirect:/create";
     }
 
+    @PostMapping("/edit_income")
+    public String editIncome(@RequestParam Integer id, @Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "money_page";
+        }
+    
+        try {
+            Income income = inrepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
+            model.addAttribute("income", income);
+            Invoice invoice = irepo.findById(income.getOid()).orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
+            invoice.setPaymethod(invoiceDto.getPaymethod());
+            invoice.setStatus(invoiceDto.getStatus());
+            irepo.save(invoice);
+            model.addAttribute("invoice", invoice);
+    
+            income.setPaymethod(invoice.getPaymethod());
+            income.setStatus(invoice.getStatus());
+            inrepo.save(income);
+    
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return "redirect:/money_page";
+        }
+    
+        return "redirect:/money_page";
+    }
+
     @PostMapping("/edit")
     public String updateProduct(Model model, @RequestParam Integer code, @Valid @ModelAttribute ProductDto productDto,
             BindingResult result) {
@@ -500,7 +700,6 @@ public class ProductController {
         exrepo.deleteAllExpenses();
         return "redirect:/money_page";
     }
-
 
     @RequestMapping("/delete_amount/{id}")
     public String deleteamount(@RequestParam Integer id) {

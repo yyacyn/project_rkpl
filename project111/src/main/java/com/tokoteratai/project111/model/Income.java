@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,11 +26,15 @@ public class Income {
     private String paymethod;
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "p_code")
+    private Product p_code;
+
     public Income() {
     }
 
     public Income(Integer id, String cus_name, LocalDateTime date, Integer total, Integer qty, Integer oid,
-            String paymethod, String status) {
+            String paymethod, String status, Product p_code) {
         this.id = id;
         this.cus_name = cus_name;
         this.date = date;
@@ -37,6 +43,7 @@ public class Income {
         this.oid = oid;
         this.paymethod = paymethod;
         this.status = status;
+        this.p_code = p_code;
     }
 
     public Integer getId() {
@@ -101,6 +108,14 @@ public class Income {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Product getP_code() {
+        return p_code;
+    }
+
+    public void setP_code(Product p_code) {
+        this.p_code = p_code;
     }
 
     

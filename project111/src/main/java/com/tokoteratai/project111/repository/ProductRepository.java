@@ -1,6 +1,7 @@
 package com.tokoteratai.project111.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,7 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE Product SET name = :name, category = :category, s_price = :s_price, p_price = :p_price, stock = :stock WHERE code = :code", nativeQuery = true)
-    void updateByCode(@Param("name") String name, @Param("category") String category, @Param("s_price") Integer s_price, @Param("p_price") Integer p_price, @Param("stock") Integer stock, @Param("code") Integer code);
+    void updateByCode(@Param("name") String name, @Param("category") String category, @Param("s_price") Integer s_price,
+            @Param("p_price") Integer p_price, @Param("stock") Integer stock, @Param("code") Integer code);
 
     List<Product> findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(String name, String category);
 

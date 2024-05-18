@@ -1,125 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Teratai 7 Admin</title>
-        <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
-        <link rel="stylesheet" href="styledashboard.css">
-    </head>
-    <body>
 
-        <!--SIDEBAR-->
-        <input type="checkbox" id="nav-toggle">
-        <div class="sidebar">
-            <div class="sidebar-brand">
-                <span>
-                    <img src="images/teratai7.png" width="90%px" />
-                </span>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="css/stylesdashboard.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+        crossorigin="anonymous"></script>
+    <style>
+        .card-single {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 0.75rem;
+            border-radius: 20px;
+            box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
+            margin-bottom: 1rem;
+        }
+
+        .card-single div:first-child span {
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1rem;
+            margin-bottom: auto;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+        }
+
+        .info img {
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html"><strong>DASHBOARD</strong></a>
+        <button class="order-1 btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#"><i
+                class="las la-bars"></i></button>
+
+        <!-- Navbar Search-->
+        <form class="my-2 ml-auto mr-0 d-none d-md-inline-block form-inline mr-md-3 my-md-0">
+            <div class="input-group">
+                <input class="form-control" id="search-input" type="text" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="search-button" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
             </div>
-            <div class="sidebar-menu">
-                <ul>
-                    <li>
-                        <a href="/"><span class="las la-home"></span><span>Dashboard</span></a>
-                    </li>
-                    <li>
-                        <a href="product_page"><span class="las la-clipboard-list"></span><span>Product</span></a>
-                    </li>
-                    <li>
-                        <a href="money_page"><span class="las la-money-bill"></span><span>Report Sales</span></a>
-                    </li>
-                </ul>
-            </div>
+        </form>
+
+        <!-- Navbar-->
+        <ul class="ml-auto navbar-nav ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="logout.php">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="sidebar-brand">
+                        <span>
+                            <img src="images/teratai7.png" width="90%px" />
+                        </span>
+                    </div>
+                    <div class="nav">
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="las la-home"></i></div>
+                            DASHBOARD
+                        </a>
+                        <a class="nav-link" href="product_page">
+                            <div class="sb-nav-link-icon"><i class="las la-clipboard-list"></i></div>
+                            PRODUCT
+                        </a>
+                        <a class="nav-link" href="money_page">
+                            <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
+                            SALES REPORT
+                        </a>
+                        <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="masuk.html">BARANG MASUK</a>
+                                    <a class="nav-link" href="stock.html">STOCK</a>
+                                    <a class="nav-link" href="keluar.html">BARANG KELUAR</a>
+                                </nav>
+                            </div> -->
+                    </div>
+                </div>
+            </nav>
         </div>
 
-        <!--SEARCHBAR-->
-        <div class="main-content">
-            <header>
-                <h2>
-                    <label for="nav-toggle">
-                        <span class="las la-bars"></span>
-                    </label>
-                    DASHBOARD
-                </h2>
-                <div class="search-wrapper">
-                    <button type="submit" class="search-btn"><span class="las la-search"></span></button>
-                    <input type="search" placeholder="search here" />
-                </div>
-                <div class="user-wrapper">
-                    <img src="images/6.jpg" width="40px" height="40px" alt="">
-                </div>
-            </header>
-            
         <!--KONTEN-->
+        <div id="layoutSidenav_content">
             <main>
-                <div class="cards">
-                    <div class="card-single">
-                        <div>
-                            <span>Income</span>
-                            <h1>100.000</h1>
-                        </div>
-                        <div>
-                            <span class="las la-wallet"></span>
-                        </div>
-                    </div>
-                    <div class="card-single">
-                        <div>
-                            <span>Expense</span>
-                            <h1>0</h1>
-                        </div>
-                        <div>
-                            <span class="las la-wallet"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="recent-grid">
-                    <div class="chart" id="income-chart">
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                    <div class="selling-report">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Top Selling Product</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="product">
-                                    <div class="info">
-                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
-                                        <div>
-                                            <h3>Baju</h3>
-                                            <small>Kategori :</small><br>
-                                            <small>Total :</small>
-                                        </div>
+                <div class="container-fluid">
+                    <h1 class="mt-4"></h1>
+                    <div class="row">
+                        <div class="col-xl-2.5 col-md-6">
+                            <a href="money_page">
+                                <div class="card-single">
+                                    <div>
+                                        <span class="las la-wallet"></span><span>Income</span>
+                                        <h1 th:text="@{'Rp. ' + ${sumLunas}}"></h1>
                                     </div>
                                 </div>
-                                <div class="product">
-                                    <div class="info">
-                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
-                                        <div>
-                                            <h3>Baju</h3>
-                                            <small>Kategori :</small><br>
-                                            <small>Total :</small>
-                                        </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-2.5 col-md-6">
+                            <a href="money_page">
+                                <div class="card-single">
+                                    <div>
+                                        <span class="las la-wallet"></span><span>Expense</span>
+                                        <h1 th:text="@{'Rp. ' + ${totalExpense}}"></h1>
                                     </div>
                                 </div>
-                                <div class="product">
-                                    <div class="info">
-                                        <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
-                                        <div>
-                                            <h3>Baju</h3>
-                                            <small>Kategori :</small><br>
-                                            <small>Total :</small>
-                                        </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-2.5 col-md-6">
+                            <a href="money_page">
+                                <div class="card-single">
+                                    <div>
+                                        <span class="las la-wallet"></span><span>Payment Pending</span>
+                                        <h1 th:text="@{'Rp. ' + ${sumBelumLunas}}"></h1>
                                     </div>
                                 </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-2.5 col-md-6">
+                            <a href="money_page">
+                                <div class="card-single">
+                                    <div>
+                                        <span class="las la-wallet"></span><span>Profit</span>
+                                        <h1 th:text="@{'Rp. ' + ${sumLunas - totalExpense}}"></h1>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="mb-4 card">
+                                <div class="card-header">
+                                    <i class="mr-1 fas fa-chart-bar"></i>
+                                    Bar Chart Example
+                                </div>
+                                <div class="card-body"><canvas id="myBarChart" width="100%" height="50%"></canvas></div>
                             </div>
                         </div>
+                        <div class="col-xl-6">
+                            <div class="mb-4 card">
+                                <div class="card-header">
+                                    <i class="mr-1 fas fa-chart-bar"></i>
+                                    <strong>TOP SELLING PRODUCT</strong>
+                                </div>
+                                <div class="card-body-product">
+                                    <div class="product">
+                                        <div class="info">
+                                            <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
+                                            <div>
+                                                <!-- <h3 th:text="${topSellingProduct.name}"></h3>
+                                                    <small>Kategori :</small><span th:text="${topSellingProduct.category}"></span><br> -->
+                                                <small>Total :</small><span th:text="${topQuantity}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr> <!-- Garis pembatas -->
+                                    <div class="product">
+                                        <div class="info">
+                                            <img src="images/ex-product.jpg" width="100px" height="100px" alt="">
+                                            <div>
+                                                <h3>Baju</h3>
+                                                <small>Kategori :</small><br>
+                                                <small>Total :</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="mb-4 card">
+                        <div class="card-header">
+                            <h4>Latest Income</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Nama Barang</th>
+                                            <th>Qty</th>
+                                            <th>Penerima</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="income : ${incomes}">
+                                            <td class="border-0 px-4 py-2" th:text="${income.date}"></td>
+                                            <td class="border-0 px-4 py-2" th:text="${income.p_code.name}"></td>
+                                            <td class="border-0 px-4 py-2" th:text="${income.qty}"></td>
+                                            <td class="border-0 px-4 py-2" th:text="${income.cus_name}"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="chartdashboard.js"></script>
-    </body>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/datatables-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // const searchInput = document.getElementById('search-input');
+        // searchInput.addEventListener('keyup', (event) => {
+        //     if (event.key === 'Enter') {
+        //         const query = event.target.value;
+        //         window.location.href = `/product_page?query=${query}`;
+        //     }
+        // });
+
+        // const searchInput = document.getElementById('search-input');
+        // const searchButton = document.getElementById('search-button');
+
+        // searchInput.addEventListener('keyup', (event) => {
+        //     if (event.key === 'Enter') {
+        //         searchButton.click();
+        //     }
+        // });
+
+        document.getElementById('search-button').addEventListener('click', function () {
+            const query = document.getElementById('search-input').value;
+            window.location.href = `/search?query=${query}`;
+        });
+    </script>
+
+    <!-- <th:block layout:fragment="script">
+            <script th:inline="javascript">
+                var incomes = [[${incomes}]]
+            </script>
+            <script th:src="@{/chartdashboard.js}"></script>
+        </th:block> -->
+</body>
+
 </html>
