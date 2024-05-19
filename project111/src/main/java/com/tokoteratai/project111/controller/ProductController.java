@@ -16,9 +16,19 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,12 +44,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tokoteratai.project111.model.Product;
 import com.tokoteratai.project111.model.ProductDto;
+import com.tokoteratai.project111.repository.AccountRepository;
 import com.tokoteratai.project111.repository.AmountRepository;
 import com.tokoteratai.project111.repository.CategoryRepository;
 import com.tokoteratai.project111.repository.ExpenseRepository;
 import com.tokoteratai.project111.repository.IncomeRepository;
 import com.tokoteratai.project111.repository.InvoiceRepository;
 import com.tokoteratai.project111.repository.ProductRepository;
+import com.tokoteratai.project111.model.Account;
 import com.tokoteratai.project111.model.Amount;
 import com.tokoteratai.project111.model.AmountDto;
 import com.tokoteratai.project111.model.Category;
@@ -50,6 +62,7 @@ import com.tokoteratai.project111.model.Income;
 import com.tokoteratai.project111.model.Invoice;
 import com.tokoteratai.project111.model.InvoiceDto;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -74,14 +87,61 @@ public class ProductController {
     @Autowired
     private ExpenseRepository exrepo;
 
-    @GetMapping("/product_page")
-    public String showProductList(Model model) {
-        List<Product> product = repo.findAll();
-        model.addAttribute("products", product);
+    @Autowired
+    private AccountRepository acrepo;
 
-        List<Category> category = crepo.findAll();
-        model.addAttribute("categories", category);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    // @GetMapping("/product_page")
+    // public String showProductList(Model model, @PageableDefault(size = 5)
+    // Pageable pageable) {
+    // List<Product> product = repo.findAll();
+    // model.addAttribute("products", product);
+
+    // List<Category> category = crepo.findAll();
+    // model.addAttribute("categories", category);
+
+    // Page<Product> productPage = productService.findAll(pageable);
+    // model.addAttribute("products", productPage);
+    // return "productpage";
+    // }
+
+    @GetMapping("/product_page")
+    public String showProductList(Model model, @RequestParam(defaultValue = "1") int page) {
+        int pageSize = 6; // Change this to 6
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<Product> productPage = repo.findAll(pageable);
+
+        model.addAttribute("categories", crepo.findAll());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("products", productPage.getContent());
+
         return "productpage";
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage(Model model) {
+        List<Account> accounts = acrepo.findAll();
+        model.addAttribute("accounts", accounts);
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String handleLogin(@RequestParam String username, @RequestParam String password, HttpSession session,
+            Model model) {
+        Optional<Account> account = acrepo.findByUsername(username);
+
+        if (account.isPresent() && passwordEncoder.matches(password, account.get().getPassword())) {
+            // Store the logged-in user in the session
+            session.setAttribute("loggedInUser", account.get());
+
+            return "redirect:/";
+        } else {
+            model.addAttribute("loginError", "Invalid username or password.");
+            return "login";
+        }
     }
 
     @GetMapping("/search")
@@ -101,6 +161,12 @@ public class ProductController {
         model.addAttribute("categories", categoryList);
         model.addAttribute("products", products);
         return "productpage";
+    }
+
+    @GetMapping("/api/daily-income")
+    public ResponseEntity<List<Income>> getDailyIncome() {
+        List<Income> incomes = inrepo.findAll();
+        return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
 
     @GetMapping("/")
@@ -150,6 +216,8 @@ public class ProductController {
         Map<Product, Integer> productQuantities = new HashMap<>();
         Integer topQuantity = 0;
         Product topSellingProduct = null;
+        Integer secondTopQuantity = 0;
+        Product secondTopSellingProduct = null;
 
         for (Income income : incomes) {
             Product incomeProduct = income.getP_code();
@@ -157,15 +225,41 @@ public class ProductController {
             productQuantities.put(incomeProduct, productQuantities.getOrDefault(incomeProduct, 0) + quantity);
 
             if (productQuantities.get(incomeProduct) > topQuantity) {
-                topQuantity = productQuantities.get(incomeProduct);
+                // Update the second top selling product
+                secondTopSellingProduct = topSellingProduct;
+                secondTopQuantity = topQuantity;
+
+                // Update the top selling product
                 topSellingProduct = incomeProduct;
+                topQuantity = productQuantities.get(incomeProduct);
+            } else if (productQuantities.get(incomeProduct) > secondTopQuantity
+                    && !incomeProduct.equals(topSellingProduct)) {
+                // Update the second top selling product
+                secondTopSellingProduct = incomeProduct;
+                secondTopQuantity = productQuantities.get(incomeProduct);
             }
+
+            System.out.println("Product: " + incomeProduct + ", Quantity: " + quantity);
+            System.out.println("Top Selling Product: " + topSellingProduct + ", Top Quantity: " + topQuantity);
+            System.out.println("Second Top Selling Product: " + secondTopSellingProduct + ", Second Top Quantity: "
+                    + secondTopQuantity);
         }
 
-        model.addAttribute("topSellingProduct", topSellingProduct);
-        model.addAttribute("topQuantity", topQuantity);
+        // existing code...
 
+        if (topSellingProduct != null) {
+            model.addAttribute("topSellingProduct", topSellingProduct);
+            model.addAttribute("topQuantity", topQuantity);
+            model.addAttribute("productImage", topSellingProduct.getImgurl());
+        }
 
+        if (secondTopSellingProduct != null) {
+            model.addAttribute("secondTopSellingProduct", secondTopSellingProduct); // corrected typo here
+            model.addAttribute("secondTopQuantity", secondTopQuantity);
+            model.addAttribute("secondProductImage", secondTopSellingProduct.getImgurl());
+        }
+
+        // existing code...
 
         return "index";
     }
@@ -183,7 +277,7 @@ public class ProductController {
         invoice.setStatus(status);
         irepo.save(invoice);
 
-            // Fetch the income by its ID
+        // Fetch the income by its ID
         Optional<Income> incomeOptional = inrepo.findById(id);
         if (!incomeOptional.isPresent()) {
             return new ResponseEntity<>("Income not found", HttpStatus.NOT_FOUND);
@@ -193,8 +287,6 @@ public class ProductController {
         Income income = incomeOptional.get();
         income.setStatus(status);
         inrepo.save(income);
-
-
 
         return new ResponseEntity<>("Status updated successfully", HttpStatus.OK);
     }
@@ -233,8 +325,6 @@ public class ProductController {
 
         List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
         model.addAttribute("paymentMethod", paymentMethod);
-
-        
 
         List<Income> incomes = inrepo.findAll();
         model.addAttribute("incomes", incomes);
@@ -371,12 +461,12 @@ public class ProductController {
         Invoice invoice = new Invoice(); // create a new invoice or fetch an existing one
         model.addAttribute("invoice", invoice);
 
-        // Income income = new Income(); // create a new invoice or fetch an existing one
+        // Income income = new Income(); // create a new invoice or fetch an existing
+        // one
         // // model.addAttribute("income", income);
 
         Income income = inrepo.findById(id).get();
         model.addAttribute("income", income);
-        
 
         Integer sumQris = inrepo.sumTotalByPaymethod("qris");
         Integer sumCash = inrepo.sumTotalByPaymethod("cash");
@@ -392,11 +482,8 @@ public class ProductController {
         Integer sumLunas = inrepo.sumTotalByStatus("lunas");
         model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
 
-
         return "editIncome";
     }
-
-
 
     @PostMapping("/order_form")
     public String CreateInvoice(@jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result) {
@@ -578,29 +665,32 @@ public class ProductController {
     }
 
     @PostMapping("/edit_income")
-    public String editIncome(@RequestParam Integer id, @Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result, Model model) {
+    public String editIncome(@RequestParam Integer id, @Valid @ModelAttribute InvoiceDto invoiceDto,
+            BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "money_page";
         }
-    
+
         try {
-            Income income = inrepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
+            Income income = inrepo.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
             model.addAttribute("income", income);
-            Invoice invoice = irepo.findById(income.getOid()).orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
+            Invoice invoice = irepo.findById(income.getOid())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
             invoice.setPaymethod(invoiceDto.getPaymethod());
             invoice.setStatus(invoiceDto.getStatus());
             irepo.save(invoice);
             model.addAttribute("invoice", invoice);
-    
+
             income.setPaymethod(invoice.getPaymethod());
             income.setStatus(invoice.getStatus());
             inrepo.save(income);
-    
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/money_page";
         }
-    
+
         return "redirect:/money_page";
     }
 

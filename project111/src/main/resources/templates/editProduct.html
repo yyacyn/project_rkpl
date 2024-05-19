@@ -23,9 +23,9 @@
     </style>
 </head>
 
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed bg-gray-50">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html"><strong>DASHBOARD</strong></a>
+        <a class="navbar-brand" href="edit"><strong>EDIT PRODUCT</strong></a>
         <button class="order-1 btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#"><i
                 class="las la-bars"></i></button>
 
@@ -45,9 +45,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="logout.php">Logout</a>
-                </div>
+                    <form action="/logout" method="post">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </div>
+                    </form>
             </li>
         </ul>
     </nav>
