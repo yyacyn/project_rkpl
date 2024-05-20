@@ -124,6 +124,9 @@
                                         <div class="product-name my-0">
                                             <span th:text="${product.name}" class="font-semibold text-[10px] lg:text-sm leading-none"></span>
                                         </div>
+                                        <div class="product-category my-0">
+                                            <span th:text="${product.category}" class="text-[10px] lg:text-sm leading-none"></span>
+                                        </div>
                                         <div class="product-price my-auto mb-0">
                                             <p th:text="@{'Rp. ' + ${product.s_price}}"
                                                 class="text-gray-950 text-[10px] lg:text-sm"></p>
