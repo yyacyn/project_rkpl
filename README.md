@@ -5,3 +5,4 @@ How to run
 2. Open Xampp -> start apache and MySQL
 3. Run any .java file
 4. Go to localhost:8080 in browser
+5. Log in username 'admin' and password 'admin'
