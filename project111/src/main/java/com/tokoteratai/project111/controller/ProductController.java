@@ -90,6 +90,7 @@ public class ProductController {
         model.addAttribute("incomes", incomes);
         return "printlatestincome";
     }
+
     @GetMapping("/product_page")
     public String showProductList(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 6; // Change this to 6
@@ -349,6 +350,14 @@ public class ProductController {
         List<Invoice> invoices = irepo.findAll();
         model.addAttribute("invoices", invoices);
 
+        List<Income> incomes = inrepo.findAll();
+        model.addAttribute("incomes", incomes);
+
+        if (!incomes.isEmpty()) {
+            Integer oid = incomes.get(0).getOid();
+            model.addAttribute("oid", oid);
+            // rest of your code
+        }
         List<Product> product = repo.findAll();
         model.addAttribute("products", product);
 
@@ -363,6 +372,22 @@ public class ProductController {
         return "printarea";
     }
 
+    @GetMapping("/print_area/{id}")
+    public String showPrintArea(@PathVariable("id") Integer id, Model model) {
+        Optional<Invoice> invoice = irepo.findById(id);
+        if (invoice.isPresent()) {
+            model.addAttribute("invoice", invoice.get());
+        } else {
+            // handle the case where the invoice is not found
+        }
+        return "printarea";
+    }
+
+    @PostMapping("/delete_all_invoices")
+    public String deleteAllInvoices() {
+        irepo.deleteAll();
+        return "redirect:/order_form"; // redirect to the home page
+    }
     // @GetMapping("/product_page")
     // public String getAllProduct() {
     // return "productpage";
@@ -482,42 +507,42 @@ public class ProductController {
             // Add other necessary model attributes
             List<Invoice> invoices = irepo.findAll();
             model.addAttribute("invoices", invoices);
-    
+
             List<Product> products = repo.findAll();
             model.addAttribute("products", products);
-    
+
             List<Amount> amounts = arepo.findAll();
             model.addAttribute("amounts", amounts);
 
             InvoiceDto invoicesDto = new InvoiceDto();
             model.addAttribute("invoicesDto", invoicesDto);
-    
+
             AmountDto amountDto = new AmountDto();
             model.addAttribute("amountDto", amountDto);
 
             Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
             model.addAttribute("total", total);
-    
+
             Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
             model.addAttribute("totalAmount", totalAmount);
 
             List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
             model.addAttribute("statusValues", statusValues);
-    
+
             List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
             model.addAttribute("paymentMethod", paymentMethod);
 
             Integer sumQris = inrepo.sumTotalByPaymethod("qris");
             Integer sumCash = inrepo.sumTotalByPaymethod("cash");
             Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
-    
+
             model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
             model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
             model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
-    
+
             Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
             model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
-    
+
             Integer sumLunas = inrepo.sumTotalByStatus("lunas");
             model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
             // Add other necessary attributes
@@ -536,42 +561,42 @@ public class ProductController {
             // Add other necessary model attributes
             List<Invoice> invoices = irepo.findAll();
             model.addAttribute("invoices", invoices);
-    
+
             List<Product> products = repo.findAll();
             model.addAttribute("products", products);
-    
+
             List<Amount> amounts = arepo.findAll();
             model.addAttribute("amounts", amounts);
 
             InvoiceDto invoicesDto = new InvoiceDto();
             model.addAttribute("invoicesDto", invoicesDto);
-    
+
             AmountDto amountDto = new AmountDto();
             model.addAttribute("amountDto", amountDto);
 
             Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
             model.addAttribute("total", total);
-    
+
             Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
             model.addAttribute("totalAmount", totalAmount);
 
             List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
             model.addAttribute("statusValues", statusValues);
-    
+
             List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
             model.addAttribute("paymentMethod", paymentMethod);
 
             Integer sumQris = inrepo.sumTotalByPaymethod("qris");
             Integer sumCash = inrepo.sumTotalByPaymethod("cash");
             Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
-    
+
             model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
             model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
             model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
-    
+
             Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
             model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
-    
+
             Integer sumLunas = inrepo.sumTotalByStatus("lunas");
             model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
             // Add other necessary attributes

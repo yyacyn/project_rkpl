@@ -16,73 +16,71 @@
     <title>Print</title>
 </head>
 
-<body>
-    <div class="invoice flex mx-auto">
-        <div
-            class="invoice-container bg-white p-5 rounded-lg w-[1120px] h-[575px] overflow-auto overflow-x-hidden my-5">
-            <h1 class="text-center text-2xl font-bold">Invoice</h1>
-            <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
-                <thead class="text-sm">
-                    <tr class="bg-amber-100">
-                        <th class="px-4 py-2">No</th>
-                        <th class="px-4 py-2">Customer name</th>
-                        <th class="px-4 py-2">Date</th>
-                        <th class="px-4 py-2">Product name</th>
-                        <th class="px-4 py-2">Quantity</th>
-                        <th class="px-4 py-2">Amount</th>
-                        <th class="px-4 py-2">Return</th>
-                        <th class="px-4 py-2">Total</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm rounded-md overflow-scroll">
-                    <tr>
-                        <td class="border px-4 py-2">1</td>
-                        <td class="border px-4 py-2">Budi</td>
-                        <td class="border px-4 py-2">12/12/2021</td>
-                        <td class="border px-4 py-2">Baju</td>
-                        <td class="border px-4 py-2">2</td>
-                        <td class="border px-4 py-2">Rp. 200.000</td>
-                        <td class="border px-4 py-2">Rp. 0</td>
-                        <td class="border px-4 py-2">Rp. 200.000</td>
-                    </tr>
-                    <tr>
-                        <td class="border px-4 py-2">2</td>
-                        <td class="border px-4 py-2">Joko</td>
-                        <td class="border px-4 py-2">12/12/2021</td>
-                        <td class="border px-4 py-2">Celana</td>
-                        <td class="border px-4 py-2">3</td>
-                        <td class="border px-4 py-2">Rp. 450.000</td>
-                        <td class="border px-4 py-2">Rp. 0</td>
-                        <td class="border px-4 py-2">Rp. 450.000</td>
-                    </tr>
-                    <tr>
-                        <td class="border px-4 py-2">3</td>
-                        <td class="border px-4 py-2">Joni</td>
-                        <td class="border px-4 py-2">12/12/2021</td>
-                        <td class="border px-4 py-2">Topi</td>
-                        <td class="border px-4 py-2">1</td>
-                        <td class="border px-4 py-2">Rp. 50.000</td>
-                        <td class="border px-4 py-2">Rp. 0</td>
-                        <td class="border px-4 py-2">Rp. 50.000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="invoice-form-lower mt-5 flex flex-col float-end">
-                <div class="total text-sm">
-                    <div class="form-group-transaction my-2">
-                        <label for="return">Total (Rp):</label><br>
-                        <input type="text" name="price" id="price"
-                            class="form-control bg-amber-100 px-2 py-1 rounded-lg" value="1000000">
+<body class="w-screen">
+    <div class="invoice flex flex-row justify-between items-center mx-auto">
+        <div class="text">
+            <h1 class="text-4xl font-semibold">Invoice</h1>
+            <h2 class="order-id text-gray-300">#1234</h2>
+        </div>
+        <img src="images/teratai7.png" alt="" width="20%">
+    </div>
+    <div class="detail w-[300px]">
+        <h2 class="text-xl font-semibold">Toko Teratai 7</h2>
+        <p class="text-sm mb-1">Jl. Raya Cipaku No. 1, Cipaku, Kec. Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota
+            Jakarta 12410</p>
+        <p class="telp text-sm">Telp. 0812312733</p>
+    </div>
+    <div class="customer w-[300px] mt-3">
+        <h2 class="head font-semibold text-xl">Bill to: </h2>
+        <p class="name text-sm mb-3">Name: <span class="">John Doe</span></p>
+    </div>
+    <div class="flex justify-center flex-col-reverse">
+        <table class="table-auto border-collapse border">
+            <thead >
+                <tr class="text-center">
+                    <th class="border border-collapse">No</th>
+                    <th class="border border-collapse">Date</th>
+                    <th class="border border-collapse">Product name</th>
+                    <th class="border border-collapse">Qty</th>
+                    <th class="border border-collapse">Price</th>
+                    <th class="border border-collapse">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="invoice, stat : ${invoices}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${#temporals.format(invoice.date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${invoice.p_code.name}"></td>
+                    <td th:text="${invoice.qty}"></td>
+                    <td th:text="@{'Rp. ' + ${invoice.price}}"></td>
+                    <td th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}"></td>
+                </tr>
+            </tbody>
+            <tfoot class="">
+                <div class="flex text-sm flex-col text-end mt-3">
+                    <div class="">
+                        <label for="return" class="font-semibold">Paid Amount (Rp)</label><br>
+                        <input type="text" name="amount" id="in_amount" th:value="@{'Rp. ' +${totalAmount}}"
+                            readonly>
+                    </div>
+                    <div>
+                        <label for="return" class="font-semibold">Return (Rp)</label><br>
+                        <input type="text" name="return" id="return" th:value="@{'Rp. ' + ${totalAmount - total}}"
+                            readonly>
+                    </div>
+                    <div>
+                        <label for="return" class="font-semibold">Total (Rp)</label><br>
+                        <input type="text" name="total" id="total" th:value="@{'Rp. ' + ${total}}" readonly>
                     </div>
                 </div>
-                <div class="btn-done">
-                    <button type="button"
-                        class="py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all"
-                        onclick="window.print()">Print now</button>
-                </div>
-            </div>
-        </div>
+            </tfoot>
+        </table>
     </div>
+        
+    <div class="btn-done">
+        <button type="button"
+            class="mx-auto py-2 px-3 bg-amber-200 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all"
+            onclick="window.print()">Print now</button>
     </div>
 </body>
 
