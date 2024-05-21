@@ -90,21 +90,6 @@ public class ProductController {
         model.addAttribute("incomes", incomes);
         return "printlatestincome";
     }
-
-    // @GetMapping("/product_page")
-    // public String showProductList(Model model, @PageableDefault(size = 5)
-    // Pageable pageable) {
-    // List<Product> product = repo.findAll();
-    // model.addAttribute("products", product);
-
-    // List<Category> category = crepo.findAll();
-    // model.addAttribute("categories", category);
-
-    // Page<Product> productPage = productService.findAll(pageable);
-    // model.addAttribute("products", productPage);
-    // return "productpage";
-    // }
-
     @GetMapping("/product_page")
     public String showProductList(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 6; // Change this to 6
@@ -632,7 +617,6 @@ public class ProductController {
             // Return the form with the error message
             return "amountform";
         }
-
         // Delete all existing Amount objects
         arepo.deleteAll();
 
