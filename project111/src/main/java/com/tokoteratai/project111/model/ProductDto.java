@@ -3,7 +3,7 @@ package com.tokoteratai.project111.model;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductDto {
-
+    
     private Integer code;
     private String name;
     private String category;

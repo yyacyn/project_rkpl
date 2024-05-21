@@ -26,7 +26,7 @@
         <div class="container">
             <h2>Invoice</h2>
             <div class="data-tables datatable-dark">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="mauexport">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -67,9 +67,9 @@
                             <input type="text" name="price" id="price" th:value="@{'Rp. ' + ${total}}" readonly>
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <button type="button" class="btn-done" onclick="window.print()">Print now</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

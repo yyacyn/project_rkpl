@@ -9,6 +9,7 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="css/stylesdashboard.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
         crossorigin="anonymous" />
     <link rel="stylesheet"
@@ -118,8 +119,8 @@
                             <a href="money_page">
                                 <div class="card-single">
                                     <div>
-                                        <span class="las la-wallet"></span><span>Income</span>
-                                        <h1 th:text="@{'Rp. ' + ${sumLunas}}"></h1>
+                                        <i class="las la-arrow-circle-down mr-1"></i><strong>Income</strong>
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumLunas}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -128,8 +129,8 @@
                             <a href="money_page">
                                 <div class="card-single">
                                     <div>
-                                        <span class="las la-wallet"></span><span>Expense</span>
-                                        <h1 th:text="@{'Rp. ' + ${totalExpense}}"></h1>
+                                        <i class="las la-arrow-circle-up mr-1"></i><strong>Expense</strong>
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -138,8 +139,8 @@
                             <a href="money_page">
                                 <div class="card-single">
                                     <div>
-                                        <span class="las la-wallet"></span><span>Payment Pending</span>
-                                        <h1 th:text="@{'Rp. ' + ${sumBelumLunas}}"></h1>
+                                        <i class="las la-clock mr-2"></i><strong>Payment Pending</strong>
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumBelumLunas}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -148,8 +149,8 @@
                             <a href="money_page">
                                 <div class="card-single">
                                     <div>
-                                        <span class="las la-wallet"></span><span>Profit</span>
-                                        <h1 th:text="@{'Rp. ' + ${sumLunas - totalExpense}}"></h1>
+                                        <i class="las la-wallet mr-2"></i><strong>Profit</strong>
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumLunas - totalExpense}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -160,7 +161,7 @@
                             <div class="mb-4 card">
                                 <div class="card-header">
                                     <i class="mr-1 fas fa-chart-bar"></i>
-                                    Bar Chart Example
+                                    <strong>Weekly Income</strong>
                                 </div>
                                 <div class="card-body"><canvas id="myBarChart" width="100%" height="50%"></canvas></div>
                             </div>
@@ -169,7 +170,7 @@
                             <div class="mb-4 card">
                                 <div class="card-header">
                                     <i class="mr-1 fas fa-chart-bar"></i>
-                                    <strong>TOP SELLING PRODUCT</strong>
+                                    <strong>Top Selling Products</strong>
                                 </div>
                                 <div class="card-body-product">
                                     <div class="product" th:if="${topSellingProduct != null && topQuantity > 0}">
@@ -186,18 +187,6 @@
                                         <p>No products sold</p>
                                     </div>
                                     <hr> <!-- Garis pembatas -->
-                                    <div class="product">
-                                        <div class="info" th:if="${secondTopSellingProduct != null}">
-                                            <img th:src="@{'images/' + ${secondTopSellingProduct.imgurl}}" width="100px"
-                                                height="100px" alt="">
-                                            <div>
-                                                <h3 th:text="${secondTopSellingProduct.name}"></h3>
-                                                <small>Category: </small><span
-                                                    th:text="${secondTopSellingProduct.category}"></span><br>
-                                                <small>Total sold: </small><span th:text="${secondTopQuantity}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,6 +205,7 @@
                                             <th>Nama Barang</th>
                                             <th>Qty</th>
                                             <th>Penerima</th>
+                                            <th>Total Income</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -224,10 +214,14 @@
                                             <td class="border-0 px-4 py-2" th:text="${income.p_code.name}"></td>
                                             <td class="border-0 px-4 py-2" th:text="${income.qty}"></td>
                                             <td class="border-0 px-4 py-2" th:text="${income.cus_name}"></td>
+                                            <td class="border-0 px-4 py-2" th:text="@{'Rp. ' + ${income.total}}"></td>
                                         </tr>
 
                                     </tbody>
                                 </table>
+                                <div class="mb-4">
+                                    <button class="" onclick="location.href = 'print_latest_income'" style="width: 100px;">Print</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -310,6 +304,15 @@
                 });
             }
         });
+
+        $(document).ready(function() {
+                $('#mauexport').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel', 'pdf', 'print'
+                    ]
+                });
+            });
     </script>
 
     <!-- <th:block layout:fragment="script">

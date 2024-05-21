@@ -5,30 +5,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -92,6 +83,13 @@ public class ProductController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/print_latest_income")
+    public String printLatestIncome(Model model) {
+        List<Income> incomes = inrepo.findAll();
+        model.addAttribute("incomes", incomes);
+        return "printlatestincome";
+    }
 
     // @GetMapping("/product_page")
     // public String showProductList(Model model, @PageableDefault(size = 5)
@@ -258,7 +256,6 @@ public class ProductController {
             model.addAttribute("secondTopQuantity", secondTopQuantity);
             model.addAttribute("secondProductImage", secondTopSellingProduct.getImgurl());
         }
-
         // existing code...
 
         return "index";
@@ -486,13 +483,60 @@ public class ProductController {
     }
 
     @PostMapping("/order_form")
-    public String CreateInvoice(@jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto, BindingResult result) {
+    public String CreateInvoice(Model model, @jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto,
+            BindingResult result) {
 
         // Check if the product exists in the product table
         Product product = repo.findById(invoiceDto.getP_code()).orElse(null);
         if (product == null) {
             // If the product does not exist, add an error to the BindingResult object
-            result.rejectValue("p_code", "error.p_code", "Invalid product code");
+            String errorMessage = "Invalid product code";
+            result.rejectValue("p_code", "error.p_code", errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+
+            // Add other necessary model attributes
+            List<Invoice> invoices = irepo.findAll();
+            model.addAttribute("invoices", invoices);
+    
+            List<Product> products = repo.findAll();
+            model.addAttribute("products", products);
+    
+            List<Amount> amounts = arepo.findAll();
+            model.addAttribute("amounts", amounts);
+
+            InvoiceDto invoicesDto = new InvoiceDto();
+            model.addAttribute("invoicesDto", invoicesDto);
+    
+            AmountDto amountDto = new AmountDto();
+            model.addAttribute("amountDto", amountDto);
+
+            Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
+            model.addAttribute("total", total);
+    
+            Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
+            model.addAttribute("totalAmount", totalAmount);
+
+            List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
+            model.addAttribute("statusValues", statusValues);
+    
+            List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
+            model.addAttribute("paymentMethod", paymentMethod);
+
+            Integer sumQris = inrepo.sumTotalByPaymethod("qris");
+            Integer sumCash = inrepo.sumTotalByPaymethod("cash");
+            Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
+    
+            model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
+            model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
+            model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
+    
+            Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
+            model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
+    
+            Integer sumLunas = inrepo.sumTotalByStatus("lunas");
+            model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
+            // Add other necessary attributes
+
             // Return the form with the error message
             return "orderform";
         }
@@ -500,7 +544,53 @@ public class ProductController {
         // Check if the product stock is enough
         if (product.getStock() < invoiceDto.getQty()) {
             // If the product stock is not enough, add an error to the BindingResult object
-            result.rejectValue("qty", "error.qty", "Not enough product in stock");
+            String errorMessage = "Not enough product in stock";
+            result.rejectValue("qty", "error.qty", errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+
+            // Add other necessary model attributes
+            List<Invoice> invoices = irepo.findAll();
+            model.addAttribute("invoices", invoices);
+    
+            List<Product> products = repo.findAll();
+            model.addAttribute("products", products);
+    
+            List<Amount> amounts = arepo.findAll();
+            model.addAttribute("amounts", amounts);
+
+            InvoiceDto invoicesDto = new InvoiceDto();
+            model.addAttribute("invoicesDto", invoicesDto);
+    
+            AmountDto amountDto = new AmountDto();
+            model.addAttribute("amountDto", amountDto);
+
+            Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
+            model.addAttribute("total", total);
+    
+            Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
+            model.addAttribute("totalAmount", totalAmount);
+
+            List<String> statusValues = Arrays.asList("Lunas", "Belum Lunas");
+            model.addAttribute("statusValues", statusValues);
+    
+            List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
+            model.addAttribute("paymentMethod", paymentMethod);
+
+            Integer sumQris = inrepo.sumTotalByPaymethod("qris");
+            Integer sumCash = inrepo.sumTotalByPaymethod("cash");
+            Integer sumKredit = inrepo.sumTotalByPaymethod("kredit/debit");
+    
+            model.addAttribute("sumQris", sumQris != null ? sumQris : 0);
+            model.addAttribute("sumCash", sumCash != null ? sumCash : 0);
+            model.addAttribute("sumKredit", sumKredit != null ? sumKredit : 0);
+    
+            Integer sumBelumLunas = inrepo.sumTotalByStatus("belum lunas");
+            model.addAttribute("sumBelumLunas", sumBelumLunas != null ? sumBelumLunas : 0);
+    
+            Integer sumLunas = inrepo.sumTotalByStatus("lunas");
+            model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
+            // Add other necessary attributes
+
             // Return the form with the error message
             return "orderform";
         }

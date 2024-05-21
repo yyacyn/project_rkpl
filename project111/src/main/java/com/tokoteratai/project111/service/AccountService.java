@@ -1,19 +1,12 @@
 package com.tokoteratai.project111.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.tokoteratai.project111.model.Account;
 import com.tokoteratai.project111.repository.AccountRepository;
 
 import jakarta.annotation.PostConstruct;
-
-import java.util.List;
-import java.util.Optional;
 
 // @Slf4j
 // @Service

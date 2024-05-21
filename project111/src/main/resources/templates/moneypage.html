@@ -115,7 +115,7 @@
                         <button id="income-button" class="button-active hover:font-bold transition-all">Income</button>
                         <button id="expense-button" class="transition-all hover:font-bold">Expense</button>
                     </div>
-                    <div class="income-content flex flex-row mt-10 text-sm mx-auto" id="income-content">
+                    <div class="income-content flex flex-row mt-10 text-sm mx-auto transition-all" id="income-content">
                         <div class="container-fluid">
                             <div class="mb-4 card">
                                 <div class="card-body">
@@ -169,7 +169,7 @@
                             </div>
                             <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">Kredit/Debit</label>
-                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumQris}}"
+                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumKredit}}"
                                     readonly>
                             </div>
                             <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
@@ -187,11 +187,11 @@
                                 <a href="/delete_all_income"
                                     class="bg-red-500 w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all"
                                     onclick="return confirm('Are you sure to DELETE ALL income data?')">
-                                    <box-icon name='wallet' class="mr-1"></box-icon>Delete All Data</a>
+                                    <box-icon name='wallet' class="mr-1"></box-icon>Delete All Incomes</a>
                             </div>
                         </aside>
                     </div>
-                    <div class="expense-content flex flex-row mt-10 text-sm mx-auto" style="display: none;"
+                    <div class="expense-content flex flex-row mt-10 text-sm mx-auto transition-all" style="display: none;"
                         id="expense-content">
                         <div class="expense-table h-[500px] overflow-auto overflow-x-hidden w-[780px] table-responsive">
                             <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
@@ -225,13 +225,13 @@
                                     </div>
                                     <div class="amount-of-money mt-2">
                                         <label for="amount-of-money" class="font-semibold">Amount of money</label>
-                                        <input type="text" value="200000"
+                                        <input type="text" placeholder="90000"
                                             class="bg-amber-200 font-normal h-10 pl-2 rounded-lg"
                                             th:field="${expenseDto.amount}" required>
                                     </div>
                                     <div class="information mt-2 mb-2">
                                         <label for="amount-of-money" class="font-semibold">Information</label>
-                                        <input type="text" value="200000"
+                                        <input type="text" placeholder="Buy a new chair"
                                             class="bg-amber-200 font-normal h-10 pl-2 rounded-lg"
                                             th:field="${expenseDto.info}" required>
                                     </div>

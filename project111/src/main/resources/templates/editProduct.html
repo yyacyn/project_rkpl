@@ -86,6 +86,10 @@
                 <div class="container-fluid">
                     <h1 class="mt-4"></h1>
                     <div class="form bg-white p-5 rounded-lg w-[100%] shadow-md">
+                        <div class="back-button bg-amber-300 px-3 py-2 rounded-lg w-[100px] hover:scale-105 hover:shadow-md hover:cursor-pointer active:scale-95 active:bg-amber-200" onclick="location.href = 'create'">
+                            <i class="las la-arrow-left"></i>
+                            <a href="create" class="hover:text-black" style="text-decoration: none;">Back</a>
+                        </div>
                         <h1 class="text-center text-2xl font-bold">Edit Product Form</h1>
                         <form method="post" enctype="multipart/form-data" th:object="${productDto}">
                             <div class="upper-form flex flex-row mx-auto justify-center items-center">
@@ -124,26 +128,26 @@
                             <div class="form-group my-2">
                                 <label for="input-name">Product name</label><br>
                                 <input type="text" name="input-name" id="input-name"
-                                    class="form-control bg-amber-100 p-2 w-full rounded-lg"
+                                    class="form-control bg-amber-100 p-2 w-full rounded-lg" placeholder="Jersey Messi"
                                     th:field="${productDto.name}">
                             </div>
                             <div class="form-group my-2">
                                 <label for="input-name">Product stock</label><br>
                                 <input type="text" name="input-name" id="input-name"
-                                    class="form-control bg-amber-100 p-2 w-full rounded-lg"
+                                    class="form-control bg-amber-100 p-2 w-full rounded-lg" placeholder="10"
                                     th:field="${productDto.stock}">
                             </div>
                             <div class="prices flex flex-col justify-between">
                                 <div class="form-group my-2">
                                     <label for="selling-price">Selling price</label><br>
                                     <input type="text" name="selling-price" id="selling-price"
-                                        class="form-control bg-amber-100 p-2 rounded-lg w-full"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="100"
                                         th:field="${productDto.s_price}">
                                 </div>
                                 <div class="form-group my-2">
                                     <label for="purchase-price">Purchase price</label><br>
                                     <input type="text" name="purchase-price" id="purchase-price"
-                                        class="form-control bg-amber-100 p-2 rounded-lg w-full"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="10"
                                         th:field="${productDto.p_price}">
                                 </div>
                             </div>

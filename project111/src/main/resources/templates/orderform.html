@@ -32,13 +32,12 @@
         <!-- Navbar Search-->
         <form class="my-2 ml-auto mr-0 d-none d-md-inline-block form-inline mr-md-3 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
-                    aria-describedby="basic-addon2" />
-                    <form action="/logout" method="post">
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <button type="submit" class="dropdown-item">Logout</button>
-                        </div>
-                    </form>
+                <input class="form-control" id="search-input" type="text" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="search-button" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
             </div>
         </form>
 
@@ -86,19 +85,19 @@
                 <div class="content flex flex-col mt-5">
                     <div class="order-form-container flex flex-col lg:flex-row mx-auto text-xl">
                         <div class="form bg-white p-5 rounded-lg w-[350px] shadow-md text-base mb-5">
-                            <h1 class="text-center font-bold text-base">Order Form</h1> 
+                            <h1 class="text-center font-bold text-base">Order Form</h1>
                             <form method="POST" enctype="multipart/form-data" th:object="${invoiceDto}">
                                 <div class="form-group my-1 lg:my-2">
                                     <label for="name">Customer name</label><br>
                                     <input type="text" name="name" id="name"
-                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" required
-                                        th:field="${invoiceDto.cus_name}">
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" required placeholder="Johnny"
+                                        th:field="*{cus_name}">
                                 </div>
                                 <div class="form-group my-1 lg:my-2">
                                     <label for="date">Date</label><br>
                                     <input type="datetime-local" name="date" id="date"
                                         class="form-control bg-amber-100 p-2 w-full rounded-lg" required
-                                        th:field="${invoiceDto.date}">
+                                        th:field="*{date}">
                                 </div>
                                 <div class="form-group my-2">
                                     <label for="product">Product code</label><br>
@@ -112,13 +111,15 @@
                                     <label for="product-qty">Quantity</label><br>
                                     <input type="text" name="qty" id="qty"
                                         class="form-control bg-amber-100 p-2 rounded-lg w-full"
-                                        th:field="${invoiceDto.qty}" required>
+                                        th:field="*{qty}" placeholder="2" required>
+                                    <p th:if="${#fields.hasErrors('qty')}" th:errors="*{qty}"
+                                        class="error text-red-500"></p>
                                 </div>
                                 <div class="form-group my-2 flex items-center mx-auto">
                                     <label for="input-category">Payment Method</label>
                                     <select id="select-category" name="select-category"
                                         class="w-full bg-amber-100 p-3 rounded-lg flex justify-center "
-                                        th:field="${invoiceDto.paymethod}">
+                                        th:field="*{paymethod}">
                                         <option th:each="method : ${paymentMethod}" th:value="${method}"
                                             th:text="${method}"></option>
                                     </select>
@@ -127,7 +128,7 @@
                                     <label for="input-category">Status</label>
                                     <select id="select-category" name="select-category"
                                         class="ml-5 w-full bg-amber-100 p-3 rounded-lg flex justify-center "
-                                        th:field="${invoiceDto.status}">
+                                        th:field="*{status}">
                                         <option th:each="status : ${statusValues}" th:value="${status}"
                                             th:text="${status}">
                                         </option>
@@ -143,7 +144,7 @@
                         <div
                             class="transaction-table bg-white p-5 rounded-lg lg:ml-2 w-[850px] h-[610px] overflow-x-hidden shadow-md">
                             <h1 class="text-center text-2xl font-bold">Transaction</h1>
-                            <table class="table-auto overflow-auto overflow-x-hidden lg:w-full">
+                            <table class="table-auto overflow-auto overflow-x-hidden lg:w-full text-center">
                                 <thead class="text-sm">
                                     <tr class="bg-amber-100">
                                         <th class="px-4 py-2">Id</th>
@@ -183,15 +184,15 @@
                                         <div class="sub-total form-group-transaction my-2">
                                             <label for="sub-total">Sub total (Rp):</label><br>
                                             <input type="text" name="price" id="sub-total"
-                                                class="form-control bg-amber-100 px-2 py-1 rounded-lg w-[200px]" readonly
-                                                disabled>
+                                                class="form-control bg-amber-100 px-2 py-1 rounded-lg w-[200px]"
+                                                readonly disabled>
                                         </div>
                                         <div class="form-group my-2">
                                             <label for="amount">Amount (Rp):</label><br>
                                             <input type="text"
                                                 class="form-control bg-amber-100 px-2 py-1 rounded-lg w-[200px]"
                                                 id="tr_amount" th:field="${amountDto.value}"
-                                                placeholder="Insert the amount paid here...">
+                                                placeholder="9000">
                                         </div>
                                         <div class="btn-done">
                                             <button type="submit" id="submit-button"
@@ -209,7 +210,7 @@
                     <div
                         class="invoice-container bg-white p-5 rounded-lg w-[1120px] h-[575px] overflow-auto overflow-x-hidden shadow-md my-2">
                         <h1 class="text-center text-2xl font-bold">Invoice</h1>
-                        <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden">
+                        <table class="table-auto w-full mt-5 overflow-auto overflow-x-hidden text-center">
                             <thead class="text-sm">
                                 <tr class="bg-amber-100">
                                     <th class="px-4 py-2 resize w-[30px]">No</th>
@@ -234,7 +235,8 @@
                                     <td class="border px-4 py-2 resize w-[200px]" th:text="${invoice.p_code.name}"></td>
                                     <td class="border px-4 py-2" th:text="${invoice.qty}"></td>
                                     <td class="border px-4 py-2" th:text="@{'Rp. ' + ${invoice.price}}"></td>
-                                    <td class="border px-4 py-2" th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}"></td>
+                                    <td class="border px-4 py-2" th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}">
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -317,6 +319,13 @@
         } else if (viewMode == "mobile") {
             viewport.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
         }
+
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ 'default';
+        if (errorMessage !== 'default') {
+            alert(errorMessage);
+        }
+        /*]]>*/
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"

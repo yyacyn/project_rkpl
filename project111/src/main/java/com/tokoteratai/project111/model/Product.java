@@ -22,6 +22,7 @@ public class Product {
     private Integer p_price;
 
     private String category;
+    
     private Integer stock;
 
     @Column(columnDefinition = "TEXT")

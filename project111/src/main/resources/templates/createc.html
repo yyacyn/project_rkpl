@@ -201,11 +201,15 @@ require 'cek.php';
                         <div class="row">
                             <div class="col-xl-2.5 col-md-6">
                                 <div class="form" id="categoryForm">
+                                    <div class="back-button bg-amber-300 px-3 py-2 rounded-lg w-[100px] hover:scale-105 hover:shadow-md hover:cursor-pointer active:scale-95 active:bg-amber-200" onclick="location.href = 'create'">
+                                        <i class="las la-arrow-left"></i>
+                                        <a href="product_page" class="hover:text-black" style="text-decoration: none;">Back</a>
+                                    </div>
                                     <h1 class="title">Create Category</h1>
                                     <form method="POST" enctype="multipart/form-data" th:object="${categoryDto}">
                                         <div class="form-group">
                                             <label for="categoryName">Category Name:</label><br>
-                                            <input type="text" id="categoryName" name="categoryName" th:field="${categoryDto.name}" class="input" required>
+                                            <input type="text" id="categoryName" name="categoryName" th:field="${categoryDto.name}" class="input" placeholder="T-Shirt" required>
                                         </div>
                                 
                                         <div class="form-group file-upload">

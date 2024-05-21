@@ -79,6 +79,10 @@
                     <div class="container-fluid">
                         <h1 class="mt-4"></h1>
                         <div class="form bg-white p-5 rounded-lg w-[100%] shadow-md">
+                            <div class="back-button bg-amber-300 px-3 py-2 rounded-lg w-[100px] hover:scale-105 hover:shadow-md hover:cursor-pointer active:scale-95 active:bg-amber-200" onclick="location.href = 'money_page'">
+                                <i class="las la-arrow-left"></i>
+                                <a href="money_page" class="hover:text-black" style="text-decoration: none;">Back</a>
+                            </div>
                             <h1 class="text-center text-2xl font-bold">Edit Income</h1>
                             <form method="post" enctype="multipart/form-data" th:object="${invoiceDto}">
                                 <div class="upper-form flex flex-row mx-auto justify-center">

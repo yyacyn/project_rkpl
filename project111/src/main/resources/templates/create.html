@@ -114,27 +114,27 @@
                             <div class="form-group my-2">
                                 <label for="input-name">Product name</label><br>
                                 <input type="text" name="input-name" id="input-name"
-                                    class="form-control bg-amber-100 p-2 w-full rounded-lg"
+                                    class="form-control bg-amber-100 p-2 w-full rounded-lg" placeholder="Jersey Ronaldo"
                                     th:field="${productDto.name}" required>
                             </div>
                             <div class="prices flex flex-col justify-between">
                                 <div class="form-group my-2">
                                     <label for="selling-price">Selling price</label><br>
                                     <input type="text" name="selling-price" id="selling-price"
-                                        class="form-control bg-amber-100 p-2 rounded-lg w-full"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="90000"
                                         th:field="${productDto.s_price}" required>
                                 </div>
                                 <div class="form-group my-2">
                                     <label for="purchase-price">Purchase price</label><br>
                                     <input type="text" name="purchase-price" id="purchase-price"
-                                        class="form-control bg-amber-100 p-2 rounded-lg w-full"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="900"
                                         th:field="${productDto.p_price}" required>
                                 </div>
                             </div>
                             <div class="form-group my-2">
                                 <label for="input-stock">Stock</label><br>
                                 <input type="text" name="input-stock" id="input-stock"
-                                    class="form-control bg-amber-100 p-2 rounded-lg w-full"
+                                    class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="7"
                                     th:field="${productDto.stock}" required>
                                 </input>
                             </div>
@@ -154,7 +154,7 @@
                                 <div class="table-responsive ">
                                     <table class="table table-bordered" id="dataTable" cellspacing="0">
                                         <thead>
-                                            <tr>
+                                            <tr class="">
                                                 <th class="resize">Code</th>
                                                 <th>Name</th>
                                                 <th>Picture</th>
