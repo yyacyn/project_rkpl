@@ -172,17 +172,18 @@
                                     <strong>TOP SELLING PRODUCT</strong>
                                 </div>
                                 <div class="card-body-product">
-                                    <div class="product">
+                                    <div class="product" th:if="${topSellingProduct != null && topQuantity > 0}">
                                         <div class="info">
-                                            <img th:src="@{'images/' + ${topSellingProduct.imgurl}}" width="100px"
-                                                height="100px" alt="">
+                                            <img th:src="@{'images/' + ${topSellingProduct.imgurl}}" width="100px" height="100px" alt="">
                                             <div>
                                                 <h3 th:text="${topSellingProduct.name}"></h3>
-                                                <small>Category: </small><span
-                                                    th:text="${topSellingProduct.category}"></span><br>
+                                                <small>Category: </small><span th:text="${topSellingProduct.category}"></span><br>
                                                 <small>Total sold: </small><span th:text="${topQuantity}"></span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div th:unless="${topSellingProduct != null && topQuantity > 0}">
+                                        <p>No products sold</p>
                                     </div>
                                     <hr> <!-- Garis pembatas -->
                                     <div class="product">
