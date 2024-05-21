@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print</title>
     <style>
         @media print {
             .btn-done {
                 display: none;
-            }   
+            }
         }
     </style>
-    <title>Stock Barang</title>
+    <title>Invoice</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 </head>
+
 <body>
+
     <body>
         <div class="container">
             <h2>Invoice</h2>
@@ -47,8 +51,8 @@
                             <td th:text="${#temporals.format(invoice.date, 'yyyy-MM-dd')}"></td>
                             <td th:text="${invoice.p_code.name}"></td>
                             <td th:text="${invoice.qty}"></td>
-                            <td th:text="@{'Rp. ' + ${invoice.price}}">Rp. 200.000</td>
-                            <td th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}">Rp. 200.000</td>
+                            <td th:text="@{'Rp. ' + ${invoice.price}}"></td>
+                            <td th:text="@{'Rp. ' + ${invoice.price * invoice.qty}}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,15 +60,17 @@
                     <div>
                         <div>
                             <label for="return">Paid Amount (Rp):</label><br>
-                            <input type="text" name="price" id="in_amount" th:value="@{'Rp. ' +${totalAmount}}" readonly>
+                            <input type="text" name="amount" id="in_amount" th:value="@{'Rp. ' +${totalAmount}}"
+                                readonly>
                         </div>
                         <div>
                             <label for="return">Return (Rp):</label><br>
-                            <input type="text" name="price" id="price" th:value="@{'Rp. ' + ${totalAmount - total}}" readonly>
+                            <input type="text" name="return" id="return" th:value="@{'Rp. ' + ${totalAmount - total}}"
+                                readonly>
                         </div>
                         <div>
                             <label for="return">Total (Rp):</label><br>
-                            <input type="text" name="price" id="price" th:value="@{'Rp. ' + ${total}}" readonly>
+                            <input type="text" name="total" id="total" th:value="@{'Rp. ' + ${total}}" readonly>
                         </div>
                     </div>
                     <!-- <div>
@@ -73,18 +79,51 @@
                 </div>
             </div>
         </div>
-    
+
         <script>
-            $(document).ready(function() {
-                $('#mauexport').DataTable({
+            $(document).ready(function () {
+                var table = $('#mauexport').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'excel', 'pdf', 'print'
+                        {
+                            extend: 'print',
+                            customize: function (win) {
+                                $(win.document.body)
+                                    .css('font-size', '10pt')
+                                    .append(
+                                        '<div>Paid Amount (Rp): ' + $('#in_amount').val() + '</div>',
+                                        '<div>Return (Rp): ' + $('#return').val() + '</div>',
+                                        '<div>Total (Rp): ' + $('#total').val() + '</div>'
+                                    );
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                $('row:last c', sheet).attr('s', '20');
+                                $('row:last', sheet).after(
+                                    '<row><c t="inlineStr" s="20"><is><t>Paid Amount (Rp): ' + $('#in_amount').val() + '</t></is></c></row>',
+                                    '<row><c t="inlineStr" s="20"><is><t>Return (Rp): ' + $('#return').val() + '</t></is></c></row>',
+                                    '<row><c t="inlineStr" s="20"><is><t>Total (Rp): ' + $('#total').val() + '</t></is></c></row>'
+                                );
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            customize: function (doc) {
+                                doc.content.push(
+                                    'Paid Amount (Rp): ' + $('#in_amount').val(),
+                                    'Return (Rp): ' + $('#return').val(),
+                                    'Total (Rp): ' + $('#total').val()
+                                );
+                            }
+                        }
                     ]
                 });
             });
         </script>
-    
+
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
@@ -94,7 +133,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
-    
-    
-</body>
+
+
+    </body>
+
 </html>
