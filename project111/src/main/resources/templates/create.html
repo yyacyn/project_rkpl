@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Add Product</title>
@@ -75,6 +74,10 @@
                         <a class="nav-link" href="money_page">
                             <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
                             SALES REPORT
+                        </a>
+                        <a class="nav-link" href="order_form">
+                            <div class="sb-nav-link-icon"><i class="las la-shopping-basket"></i></div>
+                            ORDER
                         </a>
                     </div>
                 </div>
@@ -219,6 +222,13 @@
             const query = document.getElementById('search-input').value;
             window.location.href = `/search?query=${query}`;
         });
+
+        var viewMode = getCookie("view-mode");
+        if (viewMode == "desktop") {
+            viewport.setAttribute('content', 'width=1024');
+        } else if (viewMode == "mobile") {
+            viewport.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
+        }
     </script>
 </body>
 

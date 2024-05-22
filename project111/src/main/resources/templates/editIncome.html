@@ -84,12 +84,12 @@
                                 <a href="money_page" class="hover:text-black" style="text-decoration: none;">Back</a>
                             </div>
                             <h1 class="text-center text-2xl font-bold">Edit Income</h1>
-                            <form method="post" enctype="multipart/form-data" th:object="${invoiceDto}">
+                            <form method="post" action="/edit_income" enctype="multipart/form-data" th:object="${incomeDto}">
                                 <div class="upper-form flex flex-row mx-auto justify-center">
                                 </div>
                                 <div class="form-group my-2">
                                     <label for="input-name">Order Id</label><br>
-                                    <input type="text" name="input-name" id="input-name"
+                                    <input type="text" name="oid" id="input-name"
                                         class="form-control bg-amber-100 p-2 w-full rounded-lg"
                                         th:value="${income.oid}" readonly>
                                 </div>
@@ -112,7 +112,6 @@
                                     </select>
                                 </div>
                                 </div>
-                                
                                 <div class="lower-form flex flex-row justify-around items-center">
                                     <button type="submit"
                                         class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[300px]">Save</button>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Add Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+        crossorigin="anonymous"></script>
+    <style>
+    </style>
+</head>
+
+<body class="sb-nav-fixed bg-gray-50">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="create"><strong>ADD PRODUCT</strong></a>
+        <button class="order-1 btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#"><i
+                class="las la-bars"></i></button>
+
+        <!-- Navbar Search-->
+        <form class="my-2 ml-auto mr-0 d-none d-md-inline-block form-inline mr-md-3 my-md-0">
+            <div class="input-group">
+                <input class="form-control" id="search-input" type="text" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="search-button" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Navbar-->
+        <ul class="ml-auto navbar-nav ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <form action="/logout" method="post">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </div>
+                    </form>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="sidebar-brand">
+                        <span>
+                            <img src="images/teratai7.png" width="90%px" />
+                        </span>
+                    </div>
+                    <div class="nav">
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="las la-home"></i></div>
+                            DASHBOARD
+                        </a>
+                        <a class="nav-link" href="product_page">
+                            <div class="sb-nav-link-icon"><i class="las la-clipboard-list"></i></div>
+                            PRODUCT
+                        </a>
+                        <a class="nav-link" href="money_page">
+                            <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
+                            SALES REPORT
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!--KONTEN-->
+        <div id="layoutSidenav_content">
+            <main class="d-flex">
+                <div class="container-fluid d-flex">
+                    <div class="form bg-white p-3 rounded-lg w-[40%] h-[550px] mt-4 shadow-lg text-xs">
+                        <h1 class="text-center text-2xl font-bold">Input Form</h1>
+                        <form method="post" enctype="multipart/form-data" th:object="${productDto}">
+                            <div class="upper-form flex flex-row mx-auto justify-between">
+                                <div class="form-group my-2 flex bg-amber-100 px-2 rounded-lg items-center mx-auto">
+                                    <label for="picture" class="hover:cursor-pointer flex items-center my-0">
+                                        <box-icon name='image-add' class="hover:cursor-pointer w-4"></box-icon>
+                                        Upload picture
+                                    </label>
+                                    <div class="input-file flex">
+                                        <input type="file" name="picture" id="picture"
+                                            accept="image/png, image/gif, image/jpeg, image/jpg"
+                                            class="form-control hidden w-full" th:field="${productDto.imgurl}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group my-2 flex items-center mx-auto">
+                                    <label for="input-category"></label>
+                                    <select id="select-category" name="select-category"
+                                        class="w-full bg-amber-100 p-1 rounded-lg flex justify-center "
+                                        th:field="${productDto.category}">
+                                        <option value="">Select category</option>
+                                        <option th:each="category : ${categories}" th:value="${category.name}"
+                                            th:text="${category.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="input-name">Product name</label><br>
+                                <input type="text" name="input-name" id="input-name"
+                                    class="form-control bg-amber-100 p-2 w-full rounded-lg" placeholder="Jersey Ronaldo"
+                                    th:field="${productDto.name}" required>
+                            </div>
+                            <div class="prices flex flex-col justify-between">
+                                <div class="form-group my-2">
+                                    <label for="selling-price">Selling price</label><br>
+                                    <input type="text" name="selling-price" id="selling-price"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="90000"
+                                        th:field="${productDto.s_price}" required>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="purchase-price">Purchase price</label><br>
+                                    <input type="text" name="purchase-price" id="purchase-price"
+                                        class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="900"
+                                        th:field="${productDto.p_price}" required>
+                                </div>
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="input-stock">Stock</label><br>
+                                <input type="text" name="input-stock" id="input-stock"
+                                    class="form-control bg-amber-100 p-2 rounded-lg w-full" placeholder="7"
+                                    th:field="${productDto.stock}" required>
+                                </input>
+                            </div>
+                            <div class="lower-form flex flex-row justify-around items-center">
+                                <button type="reset"
+                                    class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px] text-xs">Reset</button>
+                                <button type="submit"
+                                    class="btn float-end mt-5 bg-amber-200 px-3 transition-all py-2 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 w-[100px] text-xs">Add
+                                    item</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="container-md pr-0">
+                        <h1 class="mt-4"></h1>
+                        <div class="mb-4 card">
+                            <div class="card-body w-[100%] text-xs">
+                                <div class="table-responsive ">
+                                    <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                        <thead>
+                                            <tr class="">
+                                                <th class="resize">Code</th>
+                                                <th>Name</th>
+                                                <th>Picture</th>
+                                                <th>Selling Price</th>
+                                                <th>Purchase Price</th>
+                                                <th>Profit</th>
+                                                <th>Stock</th>
+                                                <th>Category</th>
+                                                <th>Created at</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="product : ${products}">
+                                                <td th:text="${product.code}"></td>
+                                                <td th:text="${product.name}"></td>
+                                                <td><img th:src="@{'/images/' + ${product.imgurl}}" alt="Product Image"
+                                                        width="70%" style="margin: auto;" /></td>
+                                                <td th:text="@{'Rp. ' + ${product.s_price}}"></td>
+                                                <td th:text="@{'Rp. '+ ${product.p_price}}"></td>
+                                                <td th:text="@{'Rp. ' + ${product.s_price - product.p_price}}"></td>
+                                                <td th:text="${product.stock}"></td>
+                                                <td th:text="${product.category}"></td>
+                                                <td th:text="${product.createdAt.toString().substring(0,10)}"></td>
+                                                <td>
+                                                    <div class="edit-btn mb-2">
+                                                        <a th:href="@{/edit(code=${product.code})}"
+                                                            class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all text-xs">Edit</a>
+                                                    </div>
+                                                    <div class="delete-btn">
+                                                        <a th:href="@{/delete(code=${product.code})}"
+                                                            class="btn bg-red-400 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-red-500 transition-all text-xs"
+                                                            onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </main>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/datatables-demo.js"></script>
+
+    <script>
+
+        document.getElementById('search-button').addEventListener('click', function () {
+            const query = document.getElementById('search-input').value;
+            window.location.href = `/search?query=${query}`;
+        });
+
+        var viewMode = getCookie("view-mode");
+        if (viewMode == "desktop") {
+            viewport.setAttribute('content', 'width=1024');
+        } else if (viewMode == "mobile") {
+            viewport.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
+        }
+    </script>
+</body>
+
+</html>

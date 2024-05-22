@@ -5,12 +5,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +57,7 @@ import com.tokoteratai.project111.model.CategoryDto;
 import com.tokoteratai.project111.model.Expense;
 import com.tokoteratai.project111.model.ExpenseDto;
 import com.tokoteratai.project111.model.Income;
+import com.tokoteratai.project111.model.IncomeDto;
 import com.tokoteratai.project111.model.Invoice;
 import com.tokoteratai.project111.model.InvoiceDto;
 
@@ -88,6 +96,14 @@ public class ProductController {
     public String printLatestIncome(Model model) {
         List<Income> incomes = inrepo.findAll();
         model.addAttribute("incomes", incomes);
+
+        List<Income> allIncomes = inrepo.findAll();
+        model.addAttribute("allIncomes", allIncomes);
+
+        // Get today's incomes.
+        List<Income> todaysIncomes = inrepo.findAllByDate();
+        model.addAttribute("todaysIncomes", todaysIncomes);
+        model.addAttribute("allIncomes", allIncomes);
         return "printlatestincome";
     }
 
@@ -147,6 +163,25 @@ public class ProductController {
         return "productpage";
     }
 
+    @GetMapping("/daily-income")
+    public String yourMethod(Model model) {
+        // Get today's date.
+        LocalDate today = LocalDate.now();
+
+        // Get all incomes.
+        List<Income> allIncomes = inrepo.findAll();
+
+        // Get today's incomes.
+        List<Income> todaysIncomes = inrepo.findAllByDate();
+
+        // Add the lists to the model.
+        model.addAttribute("todaysIncomes", todaysIncomes);
+        model.addAttribute("allIncomes", allIncomes);
+
+        // Return the view name.
+        return "/";
+    }
+
     @GetMapping("/api/daily-income")
     public ResponseEntity<List<Income>> getDailyIncome() {
         List<Income> incomes = inrepo.findAll();
@@ -168,8 +203,22 @@ public class ProductController {
         List<Amount> amounts = arepo.findAll();
         model.addAttribute("amounts", amounts);
 
+        // Add the lists to the model.
+        // Get all incomes.
+        List<Income> allIncomes = inrepo.findAll();
+        model.addAttribute("allIncomes", allIncomes);
+
+        // Get today's incomes.
+        List<Income> todaysIncomes = inrepo.findAllByDate();
+        model.addAttribute("todaysIncomes", todaysIncomes);
+        model.addAttribute("allIncomes", allIncomes);
+
         Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
         model.addAttribute("totalAmount", totalAmount);
+
+        List<Product> products = repo.findAll();
+        Integer totalProductPrice = products.stream().mapToInt(Product::getP_price).sum();
+        model.addAttribute("totalProductPrice", totalProductPrice);
 
         List<Income> incomes = inrepo.findAll();
         model.addAttribute("incomes", incomes);
@@ -353,16 +402,19 @@ public class ProductController {
         List<Income> incomes = inrepo.findAll();
         model.addAttribute("incomes", incomes);
 
-        if (!incomes.isEmpty()) {
-            Integer oid = incomes.get(0).getOid();
-            model.addAttribute("oid", oid);
-            // rest of your code
-        }
-        List<Product> product = repo.findAll();
-        model.addAttribute("products", product);
-
         List<Amount> amounts = arepo.findAll();
         model.addAttribute("amounts", amounts);
+
+        if (!incomes.isEmpty() && !amounts.isEmpty()) {
+            Integer oid = amounts.get(0).getId();
+            String cusName = incomes.get(incomes.size() - 1).getCus_name();
+            model.addAttribute("oid", oid);
+            model.addAttribute("cusName", cusName);
+            // rest of your code
+        }
+
+        List<Product> product = repo.findAll();
+        model.addAttribute("products", product);
 
         Integer total = invoices.stream().mapToInt(invoice -> invoice.getPrice() * invoice.getQty()).sum();
         model.addAttribute("total", total);
@@ -465,7 +517,7 @@ public class ProductController {
         List<String> paymentMethod = Arrays.asList("Cash", "QRIS", "Kredit/Debit");
         model.addAttribute("paymentMethod", paymentMethod);
 
-        Invoice invoice = new Invoice(); // create a new invoice or fetch an existing one
+        Invoice invoice = new Invoice();
         model.addAttribute("invoice", invoice);
 
         // Income income = new Income(); // create a new invoice or fetch an existing
@@ -619,7 +671,7 @@ public class ProductController {
         income.setCus_name(invoice.getCus_name());
         income.setDate(invoice.getDate());
         income.setQty(invoice.getQty());
-        income.setOid(invoice.getId());
+        // income.setOid(invoice.getId());
         income.setTotal(invoice.getPrice() * invoice.getQty());
         income.setPaymethod(invoice.getPaymethod());
         income.setStatus(invoice.getStatus());
@@ -652,7 +704,43 @@ public class ProductController {
         // Save the new Amount object to the database
         arepo.save(amount);
 
+        // Get the id of the new Amount object
+        Integer oid = amount.getId();
+
+        // Get all Invoice objects
+        // Get all Invoice objects
+        List<Income> incomes = inrepo.findAll();
+        List<Invoice> invoices = irepo.findAll();
+
+        // Create an Income object for each Invoice object without an oid
+        for (Invoice invoice : invoices) {
+            // Create a new Income object
+            Income income = new Income();
+            income.setCus_name(invoice.getCus_name());
+            income.setDate(invoice.getDate());
+            income.setQty(invoice.getQty());
+            income.setTotal(invoice.getPrice() * invoice.getQty());
+            income.setPaymethod(invoice.getPaymethod());
+            income.setOid(amount.getId());
+            income.setStatus(invoice.getStatus());
+            income.setP_code(invoice.getP_code());
+
+            // If a matching Invoice is found, set the oid of the Income object
+            if (income.getP_code().equals(invoice.getP_code()) &&
+                    income.getCus_name().equals(invoice.getCus_name())) {
+                income.setOid(oid);
+            } else {
+                income.setOid(null);
+            }
+
+            inrepo.save(income);
+        }
+
+        // Delete all Income objects without an oid
+        inrepo.deleteByOidIsNull();
+
         return "redirect:/amountform";
+
     }
 
     @PostMapping("/delete_invoice/{id}")
@@ -764,32 +852,34 @@ public class ProductController {
     }
 
     @PostMapping("/edit_income")
-    public String editIncome(@RequestParam Integer id, @Valid @ModelAttribute InvoiceDto invoiceDto,
+    public String editIncome(@RequestParam Integer oid, @Valid @ModelAttribute IncomeDto incomeDto,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "money_page";
         }
-
+    
         try {
-            Income income = inrepo.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
+            Income income = inrepo.findByOid(oid)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + oid));
             model.addAttribute("income", income);
             Invoice invoice = irepo.findById(income.getOid())
                     .orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
-            invoice.setPaymethod(invoiceDto.getPaymethod());
-            invoice.setStatus(invoiceDto.getStatus());
+    
+            // Use incomeDto instead of invoiceDto
+            invoice.setPaymethod(incomeDto.getPaymethod());
+            invoice.setStatus(incomeDto.getStatus());
             irepo.save(invoice);
             model.addAttribute("invoice", invoice);
-
-            income.setPaymethod(invoice.getPaymethod());
-            income.setStatus(invoice.getStatus());
+    
+            income.setPaymethod(incomeDto.getPaymethod());
+            income.setStatus(incomeDto.getStatus());
             inrepo.save(income);
-
+    
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/money_page";
         }
-
+    
         return "redirect:/money_page";
     }
 

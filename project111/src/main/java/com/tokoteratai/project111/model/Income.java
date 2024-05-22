@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +25,10 @@ public class Income {
     private Integer oid;
     private String paymethod;
     private String status;
+
+    // @OneToOne
+    // @JoinColumn(name = "invo_id")
+    // private Invoice invoid;
 
     @ManyToOne
     @JoinColumn(name = "p_code")
@@ -117,5 +122,6 @@ public class Income {
         this.p_code = p_code;
     }
 
+    
     
 }

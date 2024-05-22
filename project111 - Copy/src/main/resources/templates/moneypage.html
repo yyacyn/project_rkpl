@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=0.1"> -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Sales Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#income-button").click(function () {
+                $("#income-content").show();
+                $("#expense-content").hide();
+                $("#income-button").addClass("button-active");
+                $("#expense-button").removeClass("button-active");
+            });
+
+            $("#expense-button").click(function () {
+                $("#income-content").hide();
+                $("#expense-content").show();
+                $("#income-button").removeClass("button-active");
+                $("#expense-button").addClass("button-active");
+            });
+        });
+    </script>
+    <style>
+        .button-active {
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed bg-gray-50">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="money_page"><strong>SALES REPORT</strong></a>
+        <button class="order-1 btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#"><i
+                class="las la-bars"></i></button>
+
+        <!-- Navbar Search-->
+        <form class="my-2 ml-auto mr-0 d-none d-md-inline-block form-inline mr-md-3 my-md-0">
+            <div class="input-group">
+                <input class="form-control" id="search-input" type="text" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="search-button" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Navbar-->
+        <ul class="ml-auto navbar-nav ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <form action="/logout" method="post">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </div>
+                    </form>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="sidebar-brand">
+                        <span>
+                            <img src="images/teratai7.png" width="90%px" />
+                        </span>
+                    </div>
+                    <div class="nav">
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="las la-home"></i></div>
+                            DASHBOARD
+                        </a>
+                        <a class="nav-link" href="product_page">
+                            <div class="sb-nav-link-icon"><i class="las la-clipboard-list"></i></div>
+                            PRODUCT
+                        </a>
+                        <a class="nav-link" href="money_page">
+                            <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
+                            SALES REPORT
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!--KONTEN-->
+        <div id="layoutSidenav_content">
+            <main class="flex-col flex w-100%">
+                <div class="money-content flex flex-col mt-[100px] mx-auto">
+                    <div
+                        class="flex flex-row bg-[#F1EFEF] w-[100%] justify-around h-[80px] items-center text-xl shadow-md transition-all">
+                        <button id="income-button" class="button-active hover:font-bold transition-all">Income</button>
+                        <button id="expense-button" class="transition-all hover:font-bold">Expense</button>
+                    </div>
+                    <div class="income-content flex flex-row mt-10 text-sm mx-auto transition-all" id="income-content">
+                        <div class="container-fluid">
+                            <div class="mb-4 card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
+                                            <thead class="bg-amber-200 text-center">
+                                                <tr class="text-center">
+                                                    <th>Date & Time</th>
+                                                    <th>Order ID</th>
+                                                    <th>Customer's name</th>
+                                                    <th>Qty</th>
+                                                    <th>Payment method</th>
+                                                    <th>Total</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="">
+                                                <tr th:each="income : ${incomes}">
+                                                    <td th:text="${income.date}"></td>
+                                                    <td th:text="${income.oid}"></td>
+                                                    <td th:text="${income.cus_name}"></td>
+                                                    <td th:text="${income.qty}"></td>
+                                                    <td th:text="${income.paymethod}"></td>
+                                                    <td th:text="@{'Rp. ' + ${income.total}}"></td>
+                                                    <td th:text="${income.status}">
+                                                    </td>
+                                                    <td>
+                                                        <div class="edit-btn my-auto">
+                                                            <a th:href="@{/edit_income(id=${income.id})}"
+                                                                class="btn bg-amber-200 px-3 py-1 my-0 rounded-xl hover:scale-105 active:scale-95 active:bg-amber-300 transition-all">Edit</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aside class="flex flex-col text-sm justify-start items-center ml-3">
+                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                <label for="cash-value" class="font-semibold">Cash</label>
+                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. '+ ${sumCash}}"
+                                    readonly>
+                            </div>
+                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                <label for="cash-value" class="font-semibold">QRIS</label>
+                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumQris}}"
+                                    readonly>
+                            </div>
+                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                <label for="cash-value" class="font-semibold">Kredit/Debit</label>
+                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumKredit}}"
+                                    readonly>
+                            </div>
+                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                <label for="cash-value" class="font-semibold">Belum bayar</label>
+                                <input type="text" value="200000" class="bg-amber-300 font-normal"
+                                    th:value="@{'Rp. ' + ${sumBelumLunas}}" readonly>
+                            </div>
+                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                <label for="cash-value" class="font-semibold">Total income</label>
+                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumLunas}}"
+                                    readonly>
+                            </div>
+
+                            <div class="edit-data flex items-center justify-center">
+                                <a href="/delete_all_income"
+                                    class="bg-red-500 w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 hover:text-white active:scale-95 active:bg-gray-50 shadow-md transition-all"
+                                    onclick="return confirm('Are you sure to DELETE ALL income data?')" style="text-decoration: none;">
+                                    <box-icon name='wallet' class="mr-1"></box-icon>Delete All Incomes</a>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="expense-content flex flex-row mt-10 text-sm mx-auto transition-all" style="display: none;"
+                        id="expense-content">
+                        <div class="expense-table h-[500px] overflow-auto overflow-x-hidden w-[780px] table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
+                                <thead class="bg-amber-200 text-center">
+                                    <tr>
+                                        <th class="px-4 py-2 w-[255px]">Date & Time</th>
+                                        <th class="px-4 py-2 w-[255px]">Amount of money</th>
+                                        <th class="px-4 py-2 w-[255px]">Information</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr th:each="expense : ${expenses}">
+                                        <td class="border-0 px-4 py-2" th:text="${expense.date}"></td>
+                                        <td class="border-0 px-4 py-2" th:text="@{'Rp. ' + ${expense.amount}}"></td>
+                                        <td class="border-0 px-4 py-2" th:text="${expense.info}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <aside class="flex flex-col text-sm justify-start items-center ml-5">
+                            <form method="post" enctype="multipart/form-data" th:object="${expenseDto}">
+                                <div class="h1 w-full flex justify-start text-start">
+                                    <h1 class="mb-2 text-lg font-semibold">Add Expenses</h1>
+                                </div>
+                                <div
+                                    class="container flex flex-col bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                                    <div class="date mt-3">
+                                        <label for="date">Date:</label>
+                                        <input type="datetime-local" name="" id="" class="p-1 rounded-lg"
+                                            th:field="${expenseDto.date}" required>
+                                    </div>
+                                    <div class="amount-of-money mt-2">
+                                        <label for="amount-of-money" class="font-semibold">Amount of money</label>
+                                        <input type="text" placeholder="90000"
+                                            class="bg-amber-200 font-normal h-10 pl-2 rounded-lg"
+                                            th:field="${expenseDto.amount}" required>
+                                    </div>
+                                    <div class="information mt-2 mb-2">
+                                        <label for="amount-of-money" class="font-semibold">Information</label>
+                                        <input type="text" placeholder="Buy a new chair"
+                                            class="bg-amber-200 font-normal h-10 pl-2 rounded-lg"
+                                            th:field="${expenseDto.info}" required>
+                                    </div>
+                                </div>
+                                <div class="buttons flex flex-col">
+                                    <div class="save-button flex items-center justify-end float-end">
+                                        <button
+                                            class="bg-white w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all"
+                                            type="submit">
+                                            <box-icon name='wallet' class="mr-1"></box-icon>Add Expense</button>
+                                    </div>
+                                    <div class="save-button flex items-center justify-end float-end">
+                                        <a href="/delete_all_expense"
+                                            class="bg-red-500 w-[150px] text-black py-2 flex items-center justify-center rounded-md mb-2 px-2 hover:scale-105 active:scale-95 active:bg-gray-50 shadow-md transition-all hover:text-white" style="text-decoration: none;"
+                                            onclick="return confirm('Are you sure to DELETE ALL expenses?')">
+                                            <box-icon name='wallet' class="mr-1"></box-icon>Delete All Expense</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script>
+        function updateStatus(selectElement, orderId) {
+            const newStatus = selectElement.value;
+
+            fetch(`/updateStatus?orderId=${orderId}&status=${newStatus}`, {
+                method: 'POST',
+            }).then(response => {
+                if (!response.ok) {
+                    alert('Failed to update status');
+                }
+            });
+        }
+
+        var viewMode = getCookie("view-mode");
+        if (viewMode == "desktop") {
+            viewport.setAttribute('content', 'width=1024');
+        } else if (viewMode == "mobile") {
+            viewport.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
+        }
+
+
+
+        document.getElementById('search-button').addEventListener('click', function () {
+            const query = document.getElementById('search-input').value;
+            window.location.href = `/search?query=${query}`;
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/datatables-demo.js"></script>
+</body>
+
+</html>
