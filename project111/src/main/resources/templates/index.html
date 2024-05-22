@@ -104,10 +104,10 @@
                             <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
                             SALES REPORT
                         </a>
-                        <a class="nav-link" href="order_form">
+                        <!-- <a class="nav-link" href="order_form">
                             <div class="sb-nav-link-icon"><i class="las la-shopping-basket"></i></div>
                             ORDER
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </nav>
@@ -134,7 +134,7 @@
                                 <div class="card-single">
                                     <div>
                                         <i class="las la-arrow-circle-up mr-1"></i><strong>Expense</strong>
-                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense}}"></h1>
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense + totalProductPrice}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -191,6 +191,18 @@
                                         <p>No products sold</p>
                                     </div>
                                     <hr> <!-- Garis pembatas -->
+                                    <div class="product">
+                                        <div class="info" th:if="${secondTopSellingProduct != null}">
+                                            <img th:src="@{'images/' + ${secondTopSellingProduct.imgurl}}" width="100px"
+                                                height="100px" alt="">
+                                            <div>
+                                                <h3 th:text="${secondTopSellingProduct.name}"></h3>
+                                                <small>Category: </small><span
+                                                    th:text="${secondTopSellingProduct.category}"></span><br>
+                                                <small>Total sold: </small><span th:text="${secondTopQuantity}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +216,7 @@
                                 <table class="table table-bordered text-center" id="mauexport" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th class="">Tanggal</th>
+                                            <th class="">Waktu dan Tanggal</th>
                                             <th>Nama Barang</th>
                                             <th>Qty</th>
                                             <th>Penerima</th>

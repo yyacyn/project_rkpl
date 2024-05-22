@@ -216,8 +216,9 @@ public class ProductController {
         Integer totalAmount = amounts.stream().mapToInt(Amount::getValue).sum();
         model.addAttribute("totalAmount", totalAmount);
 
-        List<Product> products = repo.findAll();
-        Integer totalProductPrice = products.stream().mapToInt(Product::getP_price).sum();
+        Integer totalProductPrice = product.stream()
+                .mapToInt(products -> products.getP_price() * products.getStock())
+                .sum();
         model.addAttribute("totalProductPrice", totalProductPrice);
 
         List<Income> incomes = inrepo.findAll();
@@ -721,7 +722,7 @@ public class ProductController {
             income.setQty(invoice.getQty());
             income.setTotal(invoice.getPrice() * invoice.getQty());
             income.setPaymethod(invoice.getPaymethod());
-            income.setOid(invoice.getId()/2);
+            income.setOid(invoice.getId() / 2);
             income.setStatus(invoice.getStatus());
             income.setP_code(invoice.getP_code());
 
@@ -841,9 +842,9 @@ public class ProductController {
         Product product = new Product();
         product.setName(productDto.getName());
         product.setCategory(productDto.getCategory());
+        product.setStock(productDto.getStock());
         product.setS_price(productDto.getS_price());
         product.setP_price(productDto.getP_price());
-        product.setStock(productDto.getStock());
         product.setImgurl(storageFileName);
         product.setCreatedAt(createdAt);
 
@@ -857,29 +858,29 @@ public class ProductController {
         if (result.hasErrors()) {
             return "money_page";
         }
-    
+
         try {
             Income income = inrepo.findByOid(oid)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + oid));
             model.addAttribute("income", income);
             Invoice invoice = irepo.findById(income.getOid())
                     .orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
-    
+
             // Use incomeDto instead of invoiceDto
             invoice.setPaymethod(incomeDto.getPaymethod());
             invoice.setStatus(incomeDto.getStatus());
             irepo.save(invoice);
             model.addAttribute("invoice", invoice);
-    
+
             income.setPaymethod(incomeDto.getPaymethod());
             income.setStatus(incomeDto.getStatus());
             inrepo.save(income);
-    
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/money_page";
         }
-    
+
         return "redirect:/money_page";
     }
 

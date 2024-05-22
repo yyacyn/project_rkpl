@@ -101,10 +101,10 @@
                             <div class="sb-nav-link-icon"><i class="las la-wallet"></i></div>
                             SALES REPORT
                         </a>
-                        <a class="nav-link" href="order_form">
+                        <!-- <a class="nav-link" href="order_form">
                             <div class="sb-nav-link-icon"><i class="las la-shopping-basket"></i></div>
                             ORDER
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </nav>
@@ -113,7 +113,7 @@
         <!--KONTEN-->
         <div id="layoutSidenav_content">
             <main class="flex-col flex w-100%">
-                <div class="money-content flex flex-col mt-[100px] mx-auto">
+                <div class="money-content flex flex-col mt-[50px] mx-auto">
                     <div
                         class="flex flex-row bg-[#F1EFEF] w-[100%] justify-around h-[80px] items-center text-xl shadow-md transition-all">
                         <button id="income-button" class="button-active hover:font-bold transition-all">Income</button>
@@ -130,6 +130,7 @@
                                                     <th>Date & Time</th>
                                                     <th>Order ID</th>
                                                     <th>Customer's name</th>
+                                                    <th>Product's name</th>
                                                     <th>Qty</th>
                                                     <th>Payment method</th>
                                                     <th>Total</th>
@@ -142,6 +143,7 @@
                                                     <td th:text="${income.date}"></td>
                                                     <td th:text="${income.oid}"></td>
                                                     <td th:text="${income.cus_name}"></td>
+                                                    <td th:text="${income.p_code.name}"></td>
                                                     <td th:text="${income.qty}"></td>
                                                     <td th:text="${income.paymethod}"></td>
                                                     <td th:text="@{'Rp. ' + ${income.total}}"></td>
@@ -160,30 +162,30 @@
                                 </div>
                             </div>
                         </div>
-                        <aside class="flex flex-col text-sm justify-start items-center ml-3">
-                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                        <aside class="flex flex-col text-sm justify-start items-center mr-5">
+                            <div class="cash bg-amber-300 w-[150px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">Cash</label>
-                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. '+ ${sumCash}}"
+                                <input type="text" class="bg-amber-300 font-normal w-[100px]" th:value="@{'Rp. '+ ${sumCash}}"
                                     readonly>
                             </div>
-                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                            <div class="cash bg-amber-300 w-[150px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">QRIS</label>
-                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumQris}}"
+                                <input type="text" class="bg-amber-300 font-normal w-[100px]" th:value="@{'Rp. ' + ${sumQris}}"
                                     readonly>
                             </div>
-                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                            <div class="cash bg-amber-300 w-[150px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">Kredit/Debit</label>
-                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumKredit}}"
+                                <input type="text" class="bg-amber-300 font-normal w-[100px]" th:value="@{'Rp. ' + ${sumKredit}}"
                                     readonly>
                             </div>
-                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                            <div class="cash bg-amber-300 w-[150px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">Belum bayar</label>
-                                <input type="text" value="200000" class="bg-amber-300 font-normal"
+                                <input type="text" value="200000" class="bg-amber-300 font-normal w-[100px]"
                                     th:value="@{'Rp. ' + ${sumBelumLunas}}" readonly>
                             </div>
-                            <div class="cash bg-amber-300 w-[200px] text-left py-2 rounded-md mb-2 px-2 ">
+                            <div class="cash bg-amber-300 w-[150px] text-left py-2 rounded-md mb-2 px-2 ">
                                 <label for="cash-value" class="font-semibold">Total income</label>
-                                <input type="text" class="bg-amber-300 font-normal" th:value="@{'Rp. ' + ${sumLunas}}"
+                                <input type="text" class="bg-amber-300 font-normal w-[100px]" th:value="@{'Rp. ' + ${sumLunas}}"
                                     readonly>
                             </div>
 
