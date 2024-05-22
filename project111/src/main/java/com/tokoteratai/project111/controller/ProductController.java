@@ -721,7 +721,7 @@ public class ProductController {
             income.setQty(invoice.getQty());
             income.setTotal(invoice.getPrice() * invoice.getQty());
             income.setPaymethod(invoice.getPaymethod());
-            income.setOid(amount.getId());
+            income.setOid(invoice.getId()/2);
             income.setStatus(invoice.getStatus());
             income.setP_code(invoice.getP_code());
 
