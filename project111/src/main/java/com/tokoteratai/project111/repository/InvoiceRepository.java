@@ -13,4 +13,5 @@ public interface InvoiceRepository extends JpaRepository <Invoice, Integer>{
     // @Query(value = "DELETE FROM Invoice WHERE id = :id", nativeQuery = true)
     // void deleteById(@Param("id") Integer id);
 
+
 }

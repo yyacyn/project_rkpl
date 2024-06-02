@@ -200,7 +200,7 @@
                     <div class="expense-content flex flex-row mt-10 text-sm mx-auto transition-all" style="display: none;"
                         id="expense-content">
                         <div class="expense-table h-[500px] overflow-auto overflow-x-hidden w-[780px] table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
+                            <table class="table table-bordered" id="example" width="90%" cellspacing="0">
                                 <thead class="bg-amber-200 text-center">
                                     <tr>
                                         <th class="px-4 py-2 w-[255px]">Date & Time</th>
@@ -287,6 +287,8 @@
             viewport.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no');
         }
 
+        new DataTable('#example');
+
 
 
         document.getElementById('search-button').addEventListener('click', function () {
@@ -303,6 +305,7 @@
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="assets/demo/datatables-demo.js"></script>
 </body>
 

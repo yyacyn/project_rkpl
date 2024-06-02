@@ -488,6 +488,9 @@ public class ProductController {
         List<Invoice> invoices = irepo.findAll();
         model.addAttribute("invoices", invoices);
 
+        List<Income> incomes = inrepo.findAll();
+        model.addAttribute("incomes", incomes);
+
         List<Product> product = repo.findAll();
         model.addAttribute("products", product);
 
@@ -863,14 +866,12 @@ public class ProductController {
             Income income = inrepo.findByOid(oid)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + oid));
             model.addAttribute("income", income);
-            Invoice invoice = irepo.findById(income.getOid())
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid invoice Id:" + income.getOid()));
 
             // Use incomeDto instead of invoiceDto
-            invoice.setPaymethod(incomeDto.getPaymethod());
-            invoice.setStatus(incomeDto.getStatus());
-            irepo.save(invoice);
-            model.addAttribute("invoice", invoice);
+            // income.setPaymethod(incomeDto.getPaymethod());
+            // income.setStatus(incomeDto.getStatus());
+            // inrepo.save(income);
+            // model.addAttribute("invoice", invoice);
 
             income.setPaymethod(incomeDto.getPaymethod());
             income.setStatus(incomeDto.getStatus());

@@ -124,20 +124,20 @@
                                     <div class="image-product mx-3 w-[50px] mt-2 lg:mt-0 lg:w-[150px]">
                                         <img th:src="@{'/images/' + ${product.imgurl}}" alt="" width="100px" class="mx-auto">
                                     </div>
-                                    <div class="product-info h-[100px] w-[50%] flex flex-col justify-start content-between">
+                                    <div class="product-info w-[80%] my-auto flex flex-col justify-start content-between">
                                         <div class="product-name my-0 mt-[-15px]">
                                             <span th:text="${product.name}" class="font-semibold text-[10px] lg:text-sm leading-none"></span>
                                         </div>
                                         <div class="product-category my-0">
                                             <span th:text="${product.category}" class="text-[10px] lg:text-sm leading-none"></span>
                                         </div>
-                                        <div class="product-price my-auto mb-0">
+                                        <div class="product-price mb-0">
                                             <p th:text="@{'Rp. ' + ${product.s_price}}"
                                                 class="text-gray-950 text-[10px] lg:text-sm"></p>
                                         </div>
                                     </div>
                                     <div
-                                        class="product-stock-code flex flex-rwo lg:flex-col sm:flex-row justify-end items-center h-[100px] mx-5 gap-1 lg:gap-2">
+                                        class="product-stock-code flex flex-rwo lg:flex-col sm:flex-row justify-end items-center h-[100px] mx-3 gap-1 lg:gap-2">
                                         <div
                                             class="product-code mb-0 lg:mb-1 bg-slate-200 p-[3px] lg:p-1 rounded-lg pr-2 lg:pr-3">
                                             <p th:text="@{'Kode:'+${product.code}}"

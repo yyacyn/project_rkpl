@@ -46,6 +46,6 @@ public interface IncomeRepository extends JpaRepository<Income, Integer> {
     Optional<Income> findByOid(Integer oid);
 
     @Query(value = "SELECT * FROM Income WHERE invo_id = :invo_id", nativeQuery = true)
-List<Income> findByInvoId(@Param("invo_id") Integer invo_id);
+    List<Income> findByInvoId(@Param("invo_id") Integer invo_id);
 
 }
