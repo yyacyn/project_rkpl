@@ -814,33 +814,27 @@ public class ProductController {
         return "redirect:/create";
     }
 
-    @PostMapping("/edit_income")
-    public String editIncome(@RequestParam Integer oid, @Valid @ModelAttribute IncomeDto incomeDto,
+    @PostMapping("/edit_income/{id}")
+    public String editIncome(@PathVariable Integer id, @Valid @ModelAttribute IncomeDto incomeDto,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "money_page";
         }
-
+    
         try {
-            Income income = inrepo.findByOid(oid)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + oid));
+            Income income = inrepo.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
             model.addAttribute("income", income);
-
-            // Use incomeDto instead of invoiceDto
-            // income.setPaymethod(incomeDto.getPaymethod());
-            // income.setStatus(incomeDto.getStatus());
-            // inrepo.save(income);
-            // model.addAttribute("invoice", invoice);
-
+    
             income.setPaymethod(incomeDto.getPaymethod());
             income.setStatus(incomeDto.getStatus());
             inrepo.save(income);
-
+    
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/money_page";
         }
-
+    
         return "redirect:/money_page";
     }
 

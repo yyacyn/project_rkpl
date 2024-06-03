@@ -43,7 +43,7 @@ public interface IncomeRepository extends JpaRepository<Income, Integer> {
     @Query(value = "SELECT * FROM Income WHERE DATE(date) = CURDATE()", nativeQuery = true)
     List<Income> findAllByDate();
 
-    Optional<Income> findByOid(Integer oid);
+    Optional<Income> findById(Integer id);
 
     @Query(value = "SELECT * FROM Income WHERE invo_id = :invo_id", nativeQuery = true)
     List<Income> findByInvoId(@Param("invo_id") Integer invo_id);
