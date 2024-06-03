@@ -134,7 +134,8 @@
                                 <div class="card-single">
                                     <div>
                                         <i class="las la-arrow-circle-up mr-1"></i><strong>Expense</strong>
-                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense + totalProductPrice}}"></h1>
+                                        <!-- <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense + totalProductPrice}}"></h1> -->
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${totalExpense}}"></h1>
                                     </div>
                                 </div>
                             </a>
@@ -154,7 +155,8 @@
                                 <div class="card-single">
                                     <div>
                                         <i class="las la-wallet mr-2"></i><strong>Profit</strong>
-                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumLunas - totalExpense - totalProductPrice}}"></h1>
+                                        <!-- <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumLunas - totalExpense - totalProductPrice}}"></h1> -->
+                                        <h1 class="text-2xl" th:text="@{'Rp. ' + ${sumLunas - totalExpense}}"></h1>
                                     </div>
                                 </div>
                             </a>

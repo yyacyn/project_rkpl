@@ -109,7 +109,7 @@ public class ProductController {
 
     @GetMapping("/product_page")
     public String showProductList(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 6; // Change this to 6
+        int pageSize = 6;
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<Product> productPage = repo.findAll(pageable);
 
@@ -134,7 +134,6 @@ public class ProductController {
         Optional<Account> account = acrepo.findByUsername(username);
 
         if (account.isPresent() && passwordEncoder.matches(password, account.get().getPassword())) {
-            // Store the logged-in user in the session
             session.setAttribute("loggedInUser", account.get());
 
             return "redirect:/";
@@ -165,20 +164,15 @@ public class ProductController {
 
     @GetMapping("/daily-income")
     public String yourMethod(Model model) {
-        // Get today's date.
         LocalDate today = LocalDate.now();
 
-        // Get all incomes.
         List<Income> allIncomes = inrepo.findAll();
 
-        // Get today's incomes.
         List<Income> todaysIncomes = inrepo.findAllByDate();
 
-        // Add the lists to the model.
         model.addAttribute("todaysIncomes", todaysIncomes);
         model.addAttribute("allIncomes", allIncomes);
 
-        // Return the view name.
         return "/";
     }
 
@@ -203,12 +197,9 @@ public class ProductController {
         List<Amount> amounts = arepo.findAll();
         model.addAttribute("amounts", amounts);
 
-        // Add the lists to the model.
-        // Get all incomes.
         List<Income> allIncomes = inrepo.findAll();
         model.addAttribute("allIncomes", allIncomes);
 
-        // Get today's incomes.
         List<Income> todaysIncomes = inrepo.findAllByDate();
         model.addAttribute("todaysIncomes", todaysIncomes);
         model.addAttribute("allIncomes", allIncomes);
@@ -259,16 +250,13 @@ public class ProductController {
             productQuantities.put(incomeProduct, productQuantities.getOrDefault(incomeProduct, 0) + quantity);
 
             if (productQuantities.get(incomeProduct) > topQuantity) {
-                // Update the second top selling product
                 secondTopSellingProduct = topSellingProduct;
                 secondTopQuantity = topQuantity;
 
-                // Update the top selling product
                 topSellingProduct = incomeProduct;
                 topQuantity = productQuantities.get(incomeProduct);
             } else if (productQuantities.get(incomeProduct) > secondTopQuantity
                     && !incomeProduct.equals(topSellingProduct)) {
-                // Update the second top selling product
                 secondTopSellingProduct = incomeProduct;
                 secondTopQuantity = productQuantities.get(incomeProduct);
             }
@@ -279,7 +267,6 @@ public class ProductController {
                     + secondTopQuantity);
         }
 
-        // existing code...
 
         if (topSellingProduct != null) {
             model.addAttribute("topSellingProduct", topSellingProduct);
@@ -292,31 +279,26 @@ public class ProductController {
             model.addAttribute("secondTopQuantity", secondTopQuantity);
             model.addAttribute("secondProductImage", secondTopSellingProduct.getImgurl());
         }
-        // existing code...
 
         return "index";
     }
 
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestParam Integer id, @RequestParam String status) {
-        // Fetch the order by its ID
         Optional<Invoice> invoOptional = irepo.findById(id);
         if (!invoOptional.isPresent()) {
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
 
-        // Update the status
         Invoice invoice = invoOptional.get();
         invoice.setStatus(status);
         irepo.save(invoice);
 
-        // Fetch the income by its ID
         Optional<Income> incomeOptional = inrepo.findById(id);
         if (!incomeOptional.isPresent()) {
             return new ResponseEntity<>("Income not found", HttpStatus.NOT_FOUND);
         }
 
-        // Update the status
         Income income = incomeOptional.get();
         income.setStatus(status);
         inrepo.save(income);
@@ -411,7 +393,6 @@ public class ProductController {
             String cusName = incomes.get(incomes.size() - 1).getCus_name();
             model.addAttribute("oid", oid);
             model.addAttribute("cusName", cusName);
-            // rest of your code
         }
 
         List<Product> product = repo.findAll();
@@ -431,7 +412,7 @@ public class ProductController {
         if (invoice.isPresent()) {
             model.addAttribute("invoice", invoice.get());
         } else {
-            // handle the case where the invoice is not found
+            
         }
         return "printarea";
     }
@@ -439,7 +420,7 @@ public class ProductController {
     @PostMapping("/delete_all_invoices")
     public String deleteAllInvoices() {
         irepo.deleteAll();
-        return "redirect:/order_form"; // redirect to the home page
+        return "redirect:/order_form";
     }
     // @GetMapping("/product_page")
     // public String getAllProduct() {
@@ -524,8 +505,7 @@ public class ProductController {
         Invoice invoice = new Invoice();
         model.addAttribute("invoice", invoice);
 
-        // Income income = new Income(); // create a new invoice or fetch an existing
-        // one
+        // Income income = new Income();
         // // model.addAttribute("income", income);
 
         Income income = inrepo.findById(id).get();
@@ -552,15 +532,12 @@ public class ProductController {
     public String CreateInvoice(Model model, @jakarta.validation.Valid @ModelAttribute InvoiceDto invoiceDto,
             BindingResult result) {
 
-        // Check if the product exists in the product table
         Product product = repo.findById(invoiceDto.getP_code()).orElse(null);
         if (product == null) {
-            // If the product does not exist, add an error to the BindingResult object
             String errorMessage = "Invalid product code";
             result.rejectValue("p_code", "error.p_code", errorMessage);
             model.addAttribute("errorMessage", errorMessage);
 
-            // Add other necessary model attributes
             List<Invoice> invoices = irepo.findAll();
             model.addAttribute("invoices", invoices);
 
@@ -601,20 +578,15 @@ public class ProductController {
 
             Integer sumLunas = inrepo.sumTotalByStatus("lunas");
             model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
-            // Add other necessary attributes
 
-            // Return the form with the error message
             return "orderform";
         }
 
-        // Check if the product stock is enough
         if (product.getStock() < invoiceDto.getQty()) {
-            // If the product stock is not enough, add an error to the BindingResult object
             String errorMessage = "Not enough product in stock";
             result.rejectValue("qty", "error.qty", errorMessage);
             model.addAttribute("errorMessage", errorMessage);
 
-            // Add other necessary model attributes
             List<Invoice> invoices = irepo.findAll();
             model.addAttribute("invoices", invoices);
 
@@ -655,9 +627,7 @@ public class ProductController {
 
             Integer sumLunas = inrepo.sumTotalByStatus("lunas");
             model.addAttribute("sumLunas", sumLunas != null ? sumLunas : 0);
-            // Add other necessary attributes
 
-            // Return the form with the error message
             return "orderform";
         }
 
@@ -682,9 +652,7 @@ public class ProductController {
         income.setP_code(product);
         inrepo.save(income);
 
-        // Decrease the product stock by the quantity
         product.setStock(product.getStock() - invoiceDto.getQty());
-        // Save the updated product
         repo.save(product);
 
         return "redirect:/order_form";
@@ -693,32 +661,25 @@ public class ProductController {
     @PostMapping("/create_amount")
     public String createAmount(@ModelAttribute AmountDto amountDto, BindingResult result) {
         if (amountDto.getValue() == null) {
-            // If the amount value is null, add an error to the BindingResult object
             result.rejectValue("value", "error.value", "Amount value must not be null");
-            // Return the form with the error message
             return "amountform";
         }
-        // Delete all existing Amount objects
         arepo.deleteAll();
 
-        // Create a new Amount object
+        
         Amount amount = new Amount();
         amount.setValue(amountDto.getValue());
 
-        // Save the new Amount object to the database
+        
         arepo.save(amount);
 
-        // Get the id of the new Amount object
+        
         Integer oid = amount.getId();
 
-        // Get all Invoice objects
-        // Get all Invoice objects
-        List<Income> incomes = inrepo.findAll();
         List<Invoice> invoices = irepo.findAll();
 
-        // Create an Income object for each Invoice object without an oid
+
         for (Invoice invoice : invoices) {
-            // Create a new Income object
             Income income = new Income();
             income.setCus_name(invoice.getCus_name());
             income.setDate(invoice.getDate());
@@ -729,7 +690,7 @@ public class ProductController {
             income.setStatus(invoice.getStatus());
             income.setP_code(invoice.getP_code());
 
-            // If a matching Invoice is found, set the oid of the Income object
+            
             if (income.getP_code().equals(invoice.getP_code()) &&
                     income.getCus_name().equals(invoice.getCus_name())) {
                 income.setOid(oid);
@@ -740,7 +701,6 @@ public class ProductController {
             inrepo.save(income);
         }
 
-        // Delete all Income objects without an oid
         inrepo.deleteByOidIsNull();
 
         return "redirect:/amountform";
@@ -752,7 +712,6 @@ public class ProductController {
         try {
             irepo.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            // Handle the case where there is no Invoice with the provided id
         }
         return "redirect:/order_form";
     }
